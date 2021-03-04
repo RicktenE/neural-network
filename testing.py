@@ -86,28 +86,32 @@ print("check 1")
 # various plots are below
 a1 = plt.axes(aspect='equal')
 plt.scatter(y_eval, test_predictions)
+plt.title("check 1 - x_eval")
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
 plt.show()
 
 # dswarm=pd.DataFrame(data=[y_eval,test_predictions])
 # ax=sns.swarmplot(data=dswarm)
-print("check 2")
+print("check 2 ")
 ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1)
+plt.title("check 2 - x_eval")
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
 plt.show()
 
-print("check 3")
+print("check 3 ")
 ax = sns.boxplot(x=y_eval, y=test_predictions, whis=np.inf)
 ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1, color=".2")
+plt.title("check 3 - x_eval")
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
 plt.show()
 
-print("check 4")
+print("check 4 ")
 ax = sns.violinplot(x=y_eval, y=test_predictions, inner=None)
 ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1, color="white", edgecolor="gray")
+plt.title("check 4 - x_eval")
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
 plt.show()
@@ -118,7 +122,7 @@ plt.show()
 # plt.ylabel('Predictions [um]')
 # plt.show()
 
-print(np.min(test_predictions))
+# print(np.min(test_predictions))
 a = 1
 b = 1
 c = 1
@@ -130,26 +134,33 @@ for i in range(len(y_eval)):
         y5[a] = test_predictions[i]
         a += 1
     elif y_eval[i] == 6:
-        y6[a] = test_predictions[i]
+        y6[b] = test_predictions[i]
         b += 1
     elif y_eval[i] == 7:
-        y7[a] = test_predictions[i]
+        y7[c] = test_predictions[i]
         c += 1
 
 y5 = y5[y5 != 0]
 y7 = y7[y7 != 0]
 y6 = y6[y6 != 0]
-print(y5)
-print(y6)
-print(y7)
+# print(y5)
+# print(y6)
+# print(y7)
+print("check 5 ")
 plt.figure(figsize=(8, 6))
-plt.hist((y5), bins=np.linspace(4.5, 5.5, 100), log=False, alpha=0.9)
-plt.hist((y6), bins=np.linspace(5, 7, 100), alpha=0.9)
-plt.hist((y7), bins=np.linspace(6, 8, 100), alpha=0.9)
+plt.hist((y5), bins=np.linspace(4.5, 6, 150), log=False, alpha=0.9)
+plt.hist((y6), bins=np.linspace(5, 7, 150), alpha=0.9)
+plt.hist((y7), bins=np.linspace(6, 8.5, 150), alpha=0.9)
+plt.title("check 5- x_eval data")
+plt.xlabel("particle size (um)")
+plt.ylabel("Count")
 plt.show()
-print("5um std:" + str(np.std(y5)))
-print("6um std:" + str(np.std(y6)))
-print("7um std:" + str(np.std(y7)))
+print("5um std  x_eval:" + str(np.std(y5)))
+print("6um std: x_eval" + str(np.std(y6)))
+print("7um std: x_eval" + str(np.std(y7)))
+
+print("Counted at check 5 --" + str(y5.shape[0] + y6.shape[0] + y7.shape[0]) + " particles " )
+
 # print(y5)
 # print(y6)
 # print(y7)
@@ -160,79 +171,110 @@ print("7um std:" + str(np.std(y7)))
 #     plt.plot(x_eval[i,:])
 #     plt.plot(x_test[770+i,:])
 #     plt.show()
-print("check 5")
+print("check 6")
 start = time.time()
 test_predictions1 = model.predict(x_test).flatten()
+print(test_predictions1.shape)
 end = time.time()
-print("Counted " + str(x_test.shape[0]) + " particles in :" + str(end - start) + "sec")
+print("Counted at check 6 --" + str(x_test.shape[0]) + " particles in :" + str(end - start) + "sec")
 
-for i in range(len(test_predictions1)):
-    if test_predictions1[i] >= 8:
-        test_predictions1[i] = 7
-        print("corrected value")
 
-plt.hist((test_predictions1), bins=100, alpha=0.5)
+# for i in range(len(test_predictions1)):
+#     if test_predictions1[i] >= 11:
+#         test_predictions1[i] = 7
+#         print("corrected a value")
+
+# plt.hist((test_predictions1), bins=75, alpha=0.5)
+# plt.hist((test_predictions1), bins=75, Log=True)
+plt.hist((test_predictions1), bins=300)
+
+plt.title("check 6 - x_test data")
+plt.xlabel("particle size (um)")
+plt.ylabel("Count")
 # print(test_predictions1)
 plt.show()
+
+d = 1
+e = 1
+f = 1
+y5_2 = np.zeros((SIZE))
+y6_2 = np.zeros((SIZE))
+y7_2 = np.zeros((SIZE))
+for i in range(len(y_eval)):
+    if y_eval[i] == 5:
+        y5_2[d] = test_predictions1[i]
+        a += 1
+    elif y_eval[i] == 6:
+        y6_2[e] = test_predictions1[i]
+        b += 1
+    elif y_eval[i] == 7:
+        y7_2[f] = test_predictions1[i]
+        c += 1
+
+print("Counted at check 6.2 --" + str(y5_2.shape[0] + y6_2.shape[0] + y7_2.shape[0]) + " particles " )
+
+print("5um std  x_test: " + str(np.std(y5_2)))
+print("6um std: x_test: " + str(np.std(y6_2)))
+print("7um std: x_test: " + str(np.std(y7_2)))
 
 # x_train=np.transpose(x_train)
 # dx_train=pd.DataFrame(data=x_train)
 
 
 ###### this block is for the shapley values
-shap.initjs()
-print("check 6")
-t5 = []
-t6 = []
-t7 = []
-for i in range(len(y_eval)):
-    if y_eval[i] == 5:
-        t5.append(x_eval[i, :])
-
-    elif y_eval[i] == 6:
-        t6.append(x_eval[i, :])
-    elif y_eval[i] == 7:
-        t7.append(x_eval[i, :])
-# we create the unmixed data :)
-eval5 = np.array(t5)  # eval5 contains all the data of 5um
-eval6 = np.array(t6)  # eval6 contains all the data of 6um
-eval7 = np.array(t7)  # eval7 contains all the data of 7um
-
-background = x_train[np.random.choice(x_train.shape[0], 100, replace=False)]
-# A network explainer is created here using 200 data points
-e = shap.DeepExplainer(model, x_train[:wdw, :])
-
-# asking the shapley values for the 6um using the eval6
-shap_values = e.shap_values(eval6)
-# print(shap_values)
-# plot the feature attributions
-shap.summary_plot(shap_values, eval6, max_display=10, )
-
-sval = np.array(shap_values)
-print(sval.shape)
-x=sval[0,0,:]
-print(x.shape)
-
-
-print(a.shape)
-for i in range(len(a[:,1])):
-    plt.plot(a[i,:])
-plt.show()
-
-# save the values in a txt so we analyze in matlab
-# save_shap_file = "C:\\Users\\Papadimitriouv\\Documents\\ML\\regress\\shap\\all_freq6000\\6um.txt"
-# np.savetxt(save_shap_file, a, delimiter=',')
-# a1 = np.sum(np.abs(a), axis=0)
+# shap.initjs()
+# # print("check 7")
+# t5 = []
+# t6 = []
+# t7 = []
+# for i in range(len(y_eval)):
+#     if y_eval[i] == 5:
+#         t5.append(x_eval[i, :])
+#
+#     elif y_eval[i] == 6:
+#         t6.append(x_eval[i, :])
+#     elif y_eval[i] == 7:
+#         t7.append(x_eval[i, :])
+# # we create the unmixed data :)
+# eval5 = np.array(t5)  # eval5 contains all the data of 5um
+# eval6 = np.array(t6)  # eval6 contains all the data of 6um
+# eval7 = np.array(t7)  # eval7 contains all the data of 7um
+#
+# background = x_train[np.random.choice(x_train.shape[0], 100, replace=False)]
+# # A network explainer is created here using 200 data points
+# e = shap.DeepExplainer(model, x_train[:200, :])
+#
+# # asking the shapley values for the 6um using the eval6
+# shap_values = e.shap_values(eval6)
+# # print(shap_values)
+# # plot the feature attributions
+# shap.summary_plot(shap_values, eval6, max_display=10, )
+#
+# sval = np.array(shap_values)
+# print(sval.shape)
+# x=sval[0,0,:]
+# print(x.shape)
+#
+#
 # print(a.shape)
-plt.plot(a1)
-plt.show()
-a1 = np.sum(a, axis=0)
-# print(a.shape)
-plt.plot(a1)
-plt.show()
-# np.save(save_eval_label_file,y_eval)
-# explainer = shap.KernelExplainer(f, dx_train.iloc[:50,:])
-# shap_values = explainer.shap_values(x_train[299,:], nsamples=500)
-# shap.force_plot(explainer.expected_value, shap_values, x_train[299,:])
+# for i in range(len(a[:,1])):
+#     plt.plot(a[i,:])
+# plt.show()
+#
+# # save the values in a txt so we analyze in matlab
+# # save_shap_file = "C:\\Users\\Papadimitriouv\\Documents\\ML\\regress\\shap\\all_freq6000\\6um.txt"
+# # np.savetxt(save_shap_file, a, delimiter=',')
+# # a1 = np.sum(np.abs(a), axis=0)
+# # print(a.shape)
+# plt.plot(a1)
+# plt.show()
+# a1 = np.sum(a, axis=0)
+# # print(a.shape)
+# plt.plot(a1)
+# plt.show()
+# # np.save(save_eval_label_file,y_eval)
+# # explainer = shap.KernelExplainer(f, dx_train.iloc[:50,:])
+# # shap_values = explainer.shap_values(x_train[299,:], nsamples=500)
+# # shap.force_plot(explainer.expected_value, shap_values, x_train[299,:])
 
 

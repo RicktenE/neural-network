@@ -36,8 +36,8 @@ y_eval = np.load(load_eval_label_file)
 x_test = np.load(load_test_file)
 # normalizer = preprocessing.Normalization(input_shape=[1,6000])
 # normalizer.adapt(x_train)
-wdw =500 # for old data
-# wdw = 400
+# wdw =500 # for old data
+wdw = 400
 SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
 
 # remake our model
@@ -73,14 +73,16 @@ model.compile(
 
 # we load the weights here
 #model.load_weights("C:\\Users\\rtene\\PycharmProjects\\Neural_network\\model_weights_a6000_new.h5")
-model.load_weights("D:\\Saxion\\Jaar 4\\Bachelor Thesis\\neural_network\\best_model_weights.h5")
+model.load_weights("D:\\Saxion\\Jaar 4\\Bachelor Thesis\\neural network\\best_model_weights.h5")
 # we use the trained network with the command model.predict . The results are saved on the output.  Flatten is used
 # to create a single array at the end
 test_predictions = model.predict(x_eval).flatten()
 # test_predictions = model.predict(x_test).flatten()
 
-print(test_predictions)
-print(y_eval)
+print(type(test_predictions))
+# print(y_eval)
+
+print("check 1")
 # various plots are below
 a1 = plt.axes(aspect='equal')
 plt.scatter(y_eval, test_predictions)
@@ -90,20 +92,22 @@ plt.show()
 
 # dswarm=pd.DataFrame(data=[y_eval,test_predictions])
 # ax=sns.swarmplot(data=dswarm)
-
-ax = sns.swarmplot(x=y_eval, y=test_predictions, size=2)
+print("check 2")
+ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1)
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
 plt.show()
 
+print("check 3")
 ax = sns.boxplot(x=y_eval, y=test_predictions, whis=np.inf)
-ax = sns.swarmplot(x=y_eval, y=test_predictions, size=3, color=".2")
+ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1, color=".2")
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
 plt.show()
 
+print("check 4")
 ax = sns.violinplot(x=y_eval, y=test_predictions, inner=None)
-ax = sns.swarmplot(x=y_eval, y=test_predictions, size=3, color="white", edgecolor="gray")
+ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1, color="white", edgecolor="gray")
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
 plt.show()
@@ -139,9 +143,9 @@ print(y5)
 print(y6)
 print(y7)
 plt.figure(figsize=(8, 6))
-plt.hist((y5), bins=np.linspace(4.5, 5.5, 50), log=False, alpha=0.9)
-plt.hist((y6), bins=np.linspace(5, 7, 50), alpha=0.9)
-plt.hist((y7), bins=np.linspace(6, 8, 50), alpha=0.9)
+plt.hist((y5), bins=np.linspace(4.5, 5.5, 100), log=False, alpha=0.9)
+plt.hist((y6), bins=np.linspace(5, 7, 100), alpha=0.9)
+plt.hist((y7), bins=np.linspace(6, 8, 100), alpha=0.9)
 plt.show()
 print("5um std:" + str(np.std(y5)))
 print("6um std:" + str(np.std(y6)))
@@ -156,7 +160,7 @@ print("7um std:" + str(np.std(y7)))
 #     plt.plot(x_eval[i,:])
 #     plt.plot(x_test[770+i,:])
 #     plt.show()
-
+print("check 5")
 start = time.time()
 test_predictions1 = model.predict(x_test).flatten()
 end = time.time()
@@ -177,7 +181,7 @@ plt.show()
 
 ###### this block is for the shapley values
 shap.initjs()
-
+print("check 6")
 t5 = []
 t6 = []
 t7 = []

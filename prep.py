@@ -90,13 +90,13 @@ def make_training_set_allfreq_os(data_folder,
     read_label = data_folder + "x_data_5.txt" # Name of the data for 5 micrometer beads
     l, data = read_txt(read_label)
     # print(len(data))
-    x5 = np.transpose(data) #for old data
-    # x5 = data
+    # x5 = np.transpose(data) #for old data
+    x5 = data
     # print(len(x5))
 
     # Window around the peak
-    wdw = 500 #for old data
-    # wdw = 400
+    # wdw = 500 #for old data
+    wdw = 400
     SIZE = wdw*2  # Define the window size around the peaks as chosen in matlab
     leng = int(len(x5[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
     leng5 = leng
@@ -114,8 +114,8 @@ def make_training_set_allfreq_os(data_folder,
     # similar for 6 and 7um
     read_label = data_folder + "x_data_6.txt"
     l, data = read_txt(read_label)
-    x6 = np.transpose(data) #for old data
-    # x6 = data
+    # x6 = np.transpose(data) #for old data
+    x6 = data
     leng = int(len(x6[:, SIZE]) / 6)
     leng6=leng
     # print(leng)
@@ -130,8 +130,8 @@ def make_training_set_allfreq_os(data_folder,
     y6 = np.ones(leng) * 6
     read_label = data_folder + "x_data_7.txt"
     l, data = read_txt(read_label)
-    x7 = np.transpose(data) #for old  data
-    # x7 = data
+    # x7 = np.transpose(data) #for old data
+    x7 = data
     leng = int(len(x7[:, SIZE]) / 6)
     leng7=leng
     # print(leng)
@@ -245,10 +245,10 @@ def make_training_set_allfreq_os(data_folder,
 def prep_test_data_allfreq(data_folder_test):  # prepares the mixed beads data by putting frequencies next to each other
     read_label = data_folder_test + "x1_data_mix.txt"
     l, data = read_txt(read_label)
-    x_mix = np.transpose(data) #for old data
-    # x_mix = data
-    wdw = 500  # for Old data
-    # wdw =400
+    # x_mix = np.transpose(data) #for old data
+    x_mix = data
+    # wdw = 500  # for Old data
+    wdw =400
     SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
     # print("l is " + str(l[1]))
     leng = int(len(x_mix[:, 1]) / 6)
@@ -277,7 +277,7 @@ def prep_test_data(data_folder_test):  # puts mixed data in one array (single fr
     return x
 
 ####################Train / evaluation  data
-data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
+# data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
 #If using this data transpose everything and set window to 500 indicated as old data
 
 #data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\11-06\\"
@@ -287,7 +287,7 @@ data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
 
 
 # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-06\\"
-# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
+data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
 # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\12-07\\"
 # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\Combined_data\\"
 
@@ -297,12 +297,12 @@ data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
 
 ####################Test data
 
-data_folder_test = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
+# data_folder_test = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
 
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\11-17\\"
 
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-06\\"
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
+data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\12-07\\"
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\Combined_data\\"
 

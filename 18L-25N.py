@@ -83,7 +83,7 @@ model = tf.keras.Sequential([  # sequential= the layers in the network are arran
 model.summary()  # prints a summary of your model
 
 # compile/create ur network
-learning_rate=0.01
+learning_rate=0.001
 model.compile(
     optimizer=tf.optimizers.Adam(learning_rate=learning_rate),  # optimizer=> the function that trains the network
     loss='mean_absolute_error',  # the function that evaluates the network. the optimizer tries to minimize the loss

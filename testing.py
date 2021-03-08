@@ -37,37 +37,37 @@ x_test = np.load(load_test_file)
 # normalizer = preprocessing.Normalization(input_shape=[1,6000])
 # normalizer.adapt(x_train)
 # wdw =500 # for old data
-wdw = 400
+wdw = 500
 SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
 
 # remake our model
 model = tf.keras.Sequential([
     preprocessing.Normalization(input_shape=[6*SIZE]),
-    tf.keras.layers.Dense(25, activation='relu'),    # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='selu'),    # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
     #tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])
 
 model.summary()
 model.compile(
-    optimizer=tf.optimizers.Adam(learning_rate=0.01),
+    optimizer=tf.optimizers.Adam(learning_rate=0.001),
     loss='mean_absolute_error',
     metrics=['accuracy'])
 
@@ -102,7 +102,7 @@ plt.show()
 
 print("check 3 ")
 ax = sns.boxplot(x=y_eval, y=test_predictions, whis=np.inf)
-ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1, color=".2")
+ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1.2, color=".2")
 plt.title("check 3 - x_eval")
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
@@ -110,14 +110,17 @@ plt.show()
 
 print("check 4 ")
 ax = sns.violinplot(x=y_eval, y=test_predictions, inner=None)
-ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1, color="white", edgecolor="gray")
+ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1.2, color="white", edgecolor="gray")
 plt.title("check 4 - x_eval")
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
 plt.show()
 
+
+# print("check 4.2 ")
 # ax=sns.violinplot(x=y_eval,y=test_predictions,inner=None)
-# ax=sns.stripplot(x=y_eval,y=test_predictions,size=4,color="white",edgecolor="gray")
+# ax=sns.stripplot(x=y_eval,y=test_predictions,size=1.2,color="white",edgecolor="gray")
+# plt.title("check 4.2 - x_eval")
 # plt.xlabel('True Values [um]')
 # plt.ylabel('Predictions [um]')
 # plt.show()
@@ -126,9 +129,9 @@ plt.show()
 a = 1
 b = 1
 c = 1
-y5 = np.zeros((SIZE))
-y6 = np.zeros((SIZE))
-y7 = np.zeros((SIZE))
+y5 = np.zeros((len(y_eval)))
+y6 = np.zeros((len(y_eval)))
+y7 = np.zeros((len(y_eval)))
 for i in range(len(y_eval)):
     if y_eval[i] == 5:
         y5[a] = test_predictions[i]
@@ -148,18 +151,18 @@ y6 = y6[y6 != 0]
 # print(y7)
 print("check 5 ")
 plt.figure(figsize=(8, 6))
-plt.hist((y5), bins=np.linspace(4.5, 6, 150), log=False, alpha=0.9)
-plt.hist((y6), bins=np.linspace(5, 7, 150), alpha=0.9)
-plt.hist((y7), bins=np.linspace(6, 8.5, 150), alpha=0.9)
+plt.hist((y5), bins=np.linspace(4.5, 6, 50), log=False, alpha=0.9)
+plt.hist((y6), bins=np.linspace(5, 7, 50), alpha=0.9)
+plt.hist((y7), bins=np.linspace(6, 8.5, 50), alpha=0.9)
 plt.title("check 5- x_eval data")
 plt.xlabel("particle size (um)")
 plt.ylabel("Count")
 plt.show()
-print("5um std  x_eval:" + str(np.std(y5)))
-print("6um std: x_eval" + str(np.std(y6)))
-print("7um std: x_eval" + str(np.std(y7)))
+print("5um std  x_eval: " + str(np.std(y5)))
+print("6um std: x_eval: " + str(np.std(y6)))
+print("7um std: x_eval: " + str(np.std(y7)))
 
-print("Counted at check 5 --" + str(y5.shape[0] + y6.shape[0] + y7.shape[0]) + " particles " )
+print("Counted at check 5 x_eval --" + str(y5.shape[0] + y6.shape[0] + y7.shape[0]) + " particles " )
 
 # print(y5)
 # print(y6)
@@ -173,49 +176,64 @@ print("Counted at check 5 --" + str(y5.shape[0] + y6.shape[0] + y7.shape[0]) + "
 #     plt.show()
 print("check 6")
 start = time.time()
-test_predictions1 = model.predict(x_test).flatten()
-print(test_predictions1.shape)
+test_predictions_mix = model.predict(x_test).flatten()
+# print(test_predictions1.shape)
 end = time.time()
-print("Counted at check 6 --" + str(x_test.shape[0]) + " particles in :" + str(end - start) + "sec")
+# print("Counted at check 6 x_test --" + str(x_test.shape[0]) + " particles in :" + str(end - start) + "sec")
+
+cnt = 0
+for i in range(len(test_predictions_mix)):
+    if test_predictions_mix[i] >= 9:
+        test_predictions_mix[i] = 7
+        cnt = cnt+1
+        print("corrected " + str(cnt)+" value(s)")
 
 
-# for i in range(len(test_predictions1)):
-#     if test_predictions1[i] >= 11:
-#         test_predictions1[i] = 7
-#         print("corrected a value")
-
-# plt.hist((test_predictions1), bins=75, alpha=0.5)
-# plt.hist((test_predictions1), bins=75, Log=True)
-plt.hist((test_predictions1), bins=300)
-
-plt.title("check 6 - x_test data")
+plt.hist((test_predictions_mix), bins=100)
+plt.title("check 6 - mixed particles")
 plt.xlabel("particle size (um)")
 plt.ylabel("Count")
-# print(test_predictions1)
 plt.show()
 
+#######################################
 d = 1
 e = 1
 f = 1
-y5_2 = np.zeros((SIZE))
-y6_2 = np.zeros((SIZE))
-y7_2 = np.zeros((SIZE))
-for i in range(len(y_eval)):
-    if y_eval[i] == 5:
-        y5_2[d] = test_predictions1[i]
-        a += 1
-    elif y_eval[i] == 6:
-        y6_2[e] = test_predictions1[i]
-        b += 1
-    elif y_eval[i] == 7:
-        y7_2[f] = test_predictions1[i]
-        c += 1
+y5_mix = np.zeros((len(test_predictions_mix)))
+y6_mix = np.zeros((len(test_predictions_mix)))
+y7_mix = np.zeros((len(test_predictions_mix)))
+for i in range(len(test_predictions_mix)):
+    if test_predictions_mix[i] <= 5.5:
+        y5_mix[d] = test_predictions_mix[i]
+        d += 1
+    elif test_predictions_mix[i] > 5.5 and test_predictions_mix[i] <= 6.5:
+        y6_mix[e] = test_predictions_mix[i]
+        e += 1
+    elif test_predictions_mix[i] >= 6.5:
+        y7_mix[f] = test_predictions_mix[i]
+        f += 1
 
-print("Counted at check 6.2 --" + str(y5_2.shape[0] + y6_2.shape[0] + y7_2.shape[0]) + " particles " )
+y5_mix = y5_mix[y5_mix != 0]
+y6_mix = y6_mix[y6_mix != 0]
+y7_mix = y7_mix[y7_mix != 0]
 
-print("5um std  x_test: " + str(np.std(y5_2)))
-print("6um std: x_test: " + str(np.std(y6_2)))
-print("7um std: x_test: " + str(np.std(y7_2)))
+plt.figure(figsize=(8, 6))
+plt.hist((y5_mix), bins=np.linspace(4.5, 6, 75), log=False, alpha=0.9)
+plt.hist((y6_mix), bins=np.linspace(5, 7, 75), alpha=0.9)
+plt.hist((y7_mix), bins=np.linspace(6, 8.5, 75), alpha=0.9)
+plt.title("check 6.2 - mixed particles")
+plt.xlabel("particle size (um)")
+plt.ylabel("Count")
+plt.show()
+
+print("Counted at check 6.2 --" + str(y5_mix.shape[0] + y6_mix.shape[0] + y7_mix.shape[0]) + " particles " )
+
+print("5um std  x_test: " + str(np.std(y5_mix)))
+print("6um std: x_test: " + str(np.std(y6_mix)))
+print("7um std: x_test: " + str(np.std(y7_mix)))
+#########################################################################################
+print("shape of predictions on mixed particles  " + str(test_predictions_mix.shape))
+print("shape of predictions on x_eval  " + str(test_predictions.shape))
 
 # x_train=np.transpose(x_train)
 # dx_train=pd.DataFrame(data=x_train)

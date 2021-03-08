@@ -170,40 +170,32 @@ def make_training_set_allfreq_os(data_folder,
         y7_eval = y7[0:s7]
         x7 = x7[s7:, :]
         y7 = y7[s7:]
-    # combine 5,6,7um data in one array
-    # x5 = np.transpose(x5)
-    # x6 = np.transpose(x6)
-    # x7 = np.transpose(x7)
+
 
 # ######################################################
-#     # Making sure all data sets are equally large. If 2000 data points are trained on 6 mu, the 5.6 will be counted as a 6 sooner then when it is trained on equal footing
-#     multiplier = 50
-#     ids = np.arange(len(y5))
-#     choices = np.random.choice(ids, multiplier*min(leng5,leng6,leng7))
-#     xx5 = x5[choices]
-#     yy5 = y5[choices]
-#     x5 = xx5
-#     y5=yy5
-#     ids = np.arange(len(y6))
-#     # print((min(leng5,leng6,leng7)))
-#     # print(type(leng5))
-#     choices = np.random.choice(ids, multiplier*min(leng5,leng6,leng7))
-#     xx6 = x6[choices]
-#     yy6 = y6[choices]
-#     # print(x5.shape)
-#     # print(x6.shape)
-#     # print(xx6.shape)
-#     y6 = yy6
-#     x6 = xx6
-#     ids = np.arange(len(y7))
-#     choices = np.random.choice(ids, multiplier*min(leng5,leng6,leng7))
-#     xx7 = x7[choices]
-#     yy7 = y7[choices]
-#     # print(x5.shape)
-#     # print(x7.shape)
-#     # print(xx7.shape)
-#     x7 = xx7
-#     y7 = yy7
+    # Making sure all data sets are equally large. If 2000 data points are trained on 6 mu, the 5.6 will be counted as a 6 sooner then when it is trained on equal footing
+    multiplier = 10
+
+    ids = np.arange(len(y5))
+    choices = np.random.choice(ids, multiplier*min(leng5,leng6,leng7))
+    xx5 = x5[choices]
+    yy5 = y5[choices]
+    x5 = xx5
+    y5=yy5
+
+    ids = np.arange(len(y6))
+    choices = np.random.choice(ids, multiplier*min(leng5,leng6,leng7))
+    xx6 = x6[choices]
+    yy6 = y6[choices]
+    y6 = yy6
+    x6 = xx6
+
+    ids = np.arange(len(y7))
+    choices = np.random.choice(ids, multiplier*min(leng5,leng6,leng7))
+    xx7 = x7[choices]
+    yy7 = y7[choices]
+    x7 = xx7
+    y7 = yy7
 ################################################################################
 
     x5 = np.transpose(x5)
@@ -215,7 +207,7 @@ def make_training_set_allfreq_os(data_folder,
     print("x6 shape" + str(x6.shape))
     print("x7 shape" + str(x7.shape))
 
-
+    # combine 5,6,7um data in one array
     x5_eval = np.transpose(x5_eval)
     x6_eval = np.transpose(x6_eval)
     x7_eval = np.transpose(x7_eval)
@@ -276,6 +268,8 @@ def prep_test_data(data_folder_test):  # puts mixed data in one array (single fr
 
     return x
 
+
+
 ####################Train / evaluation  data
 # data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
 #If using this data transpose everything and set window to 500 indicated as old data
@@ -287,12 +281,12 @@ def prep_test_data(data_folder_test):  # puts mixed data in one array (single fr
 
 
 # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-06\\"
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
 # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\12-07\\"
 # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\Combined_data\\"
 
 #Directly in the matlab file for window size influence investigation
-# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
 
 
 ####################Test data
@@ -302,12 +296,15 @@ data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline rem
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\11-17\\"
 
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-06\\"
-data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
+# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\12-07\\"
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\Combined_data\\"
 
 #Directly in the matlab file for window size influence investigation
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+
+
+
 
 x_test=prep_test_data_allfreq(data_folder_test)
 # x_test=prep_test_data(data_folder_test)

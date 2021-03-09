@@ -43,25 +43,26 @@ SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
 # remake our model
 model = tf.keras.Sequential([
     preprocessing.Normalization(input_shape=[6*SIZE]),
-    tf.keras.layers.Dense(25, activation='selu'),    # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    #tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(25, activation='relu'),
+    # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='relu'),
+    # tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])
 
@@ -218,12 +219,14 @@ y6_mix = y6_mix[y6_mix != 0]
 y7_mix = y7_mix[y7_mix != 0]
 
 plt.figure(figsize=(8, 6))
-plt.hist((y5_mix), bins=np.linspace(4.5, 6, 75), log=False, alpha=0.9)
-plt.hist((y6_mix), bins=np.linspace(5, 7, 75), alpha=0.9)
-plt.hist((y7_mix), bins=np.linspace(6, 8.5, 75), alpha=0.9)
+plt.hist((y5_mix), bins=np.linspace(4.5, 6, 75), alpha=0.9, label= 'std dev 5 um ' + str(np.std(y5_mix)))
+plt.hist((y6_mix), bins=np.linspace(5, 7, 75), alpha=0.9,label= 'std dev 6 um ' + str(np.std(y6_mix)))
+plt.hist((y7_mix), bins=np.linspace(6, 8.5, 75), alpha=0.9,label= 'std dev 7 um ' + str(np.std(y7_mix)))
 plt.title("check 6.2 - mixed particles")
 plt.xlabel("particle size (um)")
 plt.ylabel("Count")
+plt.legend()
+# plt.legend((y5_mix[1], y6_mix[1], y7_mix[1]), ('std dev 5 um' + str(np.std(y5_mix)), 'std dev 6 um' + str(np.std(y6_mix)), 'std dev 7 um' + str(np.std(y7_mix))))
 plt.show()
 
 print("Counted at check 6.2 --" + str(y5_mix.shape[0] + y6_mix.shape[0] + y7_mix.shape[0]) + " particles " )

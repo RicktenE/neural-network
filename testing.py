@@ -37,7 +37,7 @@ x_test = np.load(load_test_file)
 # normalizer = preprocessing.Normalization(input_shape=[1,6000])
 # normalizer.adapt(x_train)
 # wdw =500 # for old data
-wdw = 500
+wdw = 400
 SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
 
 # remake our model

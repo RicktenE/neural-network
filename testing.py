@@ -37,31 +37,20 @@ x_test = np.load(load_test_file)
 # normalizer = preprocessing.Normalization(input_shape=[1,6000])
 # normalizer.adapt(x_train)
 # wdw =500 # for old data
-wdw = 400
+wdw = 500
 SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
 
 # remake our model
 model = tf.keras.Sequential([
     preprocessing.Normalization(input_shape=[6*SIZE]),
-    tf.keras.layers.Dense(25, activation='relu'),
-    # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(250, activation='selu'),
+    # Dense=fully connected layer. 200= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
+    tf.keras.layers.Dense(250, activation='selu'),
+    tf.keras.layers.Dense(100, activation='selu'),
+    tf.keras.layers.Dense(100, activation='selu'),
+    tf.keras.layers.Dense(50, activation='selu'),
+    tf.keras.layers.Dense(50, activation='selu'),
+    tf.keras.layers.Dense(10, activation='selu'),
     # tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])
@@ -83,35 +72,35 @@ test_predictions = model.predict(x_eval).flatten()
 print(type(test_predictions))
 # print(y_eval)
 
-print("check 1")
-# various plots are below
-a1 = plt.axes(aspect='equal')
-plt.scatter(y_eval, test_predictions)
-plt.title("check 1 - x_eval")
-plt.xlabel('True Values [um]')
-plt.ylabel('Predictions [um]')
-plt.show()
+# print("check 1")
+# # various plots are below
+# a1 = plt.axes(aspect='equal')
+# plt.scatter(y_eval, test_predictions)
+# plt.title("check 1 - x_eval")
+# plt.xlabel('True Values [um]')
+# plt.ylabel('Predictions [um]')
+# plt.show()
 
-# dswarm=pd.DataFrame(data=[y_eval,test_predictions])
-# ax=sns.swarmplot(data=dswarm)
-print("check 2 ")
-ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1)
-plt.title("check 2 - x_eval")
-plt.xlabel('True Values [um]')
-plt.ylabel('Predictions [um]')
-plt.show()
+# # dswarm=pd.DataFrame(data=[y_eval,test_predictions])
+# # ax=sns.swarmplot(data=dswarm)
+# print("check 2 ")
+# ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1)
+# plt.title("check 2 - x_eval")
+# plt.xlabel('True Values [um]')
+# plt.ylabel('Predictions [um]')
+# plt.show()
 
-print("check 3 ")
-ax = sns.boxplot(x=y_eval, y=test_predictions, whis=np.inf)
-ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1.2, color=".2")
-plt.title("check 3 - x_eval")
-plt.xlabel('True Values [um]')
-plt.ylabel('Predictions [um]')
-plt.show()
+# print("check 3 ")
+# ax = sns.boxplot(x=y_eval, y=test_predictions, whis=np.inf)
+# ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1.2, color=".2")
+# plt.title("check 3 - x_eval")
+# plt.xlabel('True Values [um]')
+# plt.ylabel('Predictions [um]')
+# plt.show()
 
 print("check 4 ")
 ax = sns.violinplot(x=y_eval, y=test_predictions, inner=None)
-ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1.2, color="white", edgecolor="gray")
+ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1, color="white", edgecolor="gray")
 plt.title("check 4 - x_eval")
 plt.xlabel('True Values [um]')
 plt.ylabel('Predictions [um]')
@@ -150,20 +139,21 @@ y6 = y6[y6 != 0]
 # print(y5)
 # print(y6)
 # print(y7)
-print("check 5 ")
-plt.figure(figsize=(8, 6))
-plt.hist((y5), bins=np.linspace(4.5, 6, 50), log=False, alpha=0.9)
-plt.hist((y6), bins=np.linspace(5, 7, 50), alpha=0.9)
-plt.hist((y7), bins=np.linspace(6, 8.5, 50), alpha=0.9)
-plt.title("check 5- x_eval data")
-plt.xlabel("particle size (um)")
-plt.ylabel("Count")
-plt.show()
-print("5um std  x_eval: " + str(np.std(y5)))
-print("6um std: x_eval: " + str(np.std(y6)))
-print("7um std: x_eval: " + str(np.std(y7)))
-
-print("Counted at check 5 x_eval --" + str(y5.shape[0] + y6.shape[0] + y7.shape[0]) + " particles " )
+#
+# print("check 5 ")
+# plt.figure(figsize=(8, 6))
+# plt.hist((y5), bins=np.linspace(4.5, 6, 50), log=False, alpha=0.9)
+# plt.hist((y6), bins=np.linspace(5, 7, 50), alpha=0.9)
+# plt.hist((y7), bins=np.linspace(6, 8.5, 50), alpha=0.9)
+# plt.title("check 5- x_eval data")
+# plt.xlabel("particle size (um)")
+# plt.ylabel("Count")
+# plt.show()
+# print("5um std  x_eval: " + str(np.std(y5)))
+# print("6um std: x_eval: " + str(np.std(y6)))
+# print("7um std: x_eval: " + str(np.std(y7)))
+#
+# print("Counted at check 5 x_eval --" + str(y5.shape[0] + y6.shape[0] + y7.shape[0]) + " particles " )
 
 # print(y5)
 # print(y6)
@@ -184,17 +174,17 @@ end = time.time()
 
 cnt = 0
 for i in range(len(test_predictions_mix)):
-    if test_predictions_mix[i] >= 9:
+    if test_predictions_mix[i] >= 15:
         test_predictions_mix[i] = 7
         cnt = cnt+1
         print("corrected " + str(cnt)+" value(s)")
 
 
-plt.hist((test_predictions_mix), bins=100)
-plt.title("check 6 - mixed particles")
-plt.xlabel("particle size (um)")
-plt.ylabel("Count")
-plt.show()
+# plt.hist((test_predictions_mix), bins=100)
+# plt.title("check 6 - mixed particles")
+# plt.xlabel("particle size (um)")
+# plt.ylabel("Count")
+# plt.show()
 
 #######################################
 d = 1
@@ -219,9 +209,9 @@ y6_mix = y6_mix[y6_mix != 0]
 y7_mix = y7_mix[y7_mix != 0]
 
 plt.figure(figsize=(8, 6))
-plt.hist((y5_mix), bins=np.linspace(4.5, 6, 75), alpha=0.9, label= 'std dev 5 um ' + str(np.std(y5_mix)))
-plt.hist((y6_mix), bins=np.linspace(5, 7, 75), alpha=0.9,label= 'std dev 6 um ' + str(np.std(y6_mix)))
-plt.hist((y7_mix), bins=np.linspace(6, 8.5, 75), alpha=0.9,label= 'std dev 7 um ' + str(np.std(y7_mix)))
+plt.hist((y5_mix), bins=np.linspace(4.5, 6, 75), alpha=0.9, label= '5 um; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' mean: '+ str(np.round(np.mean(y5_mix),2)) + ' cnt: '+ str(y5_mix.shape[0]))
+plt.hist((y6_mix), bins=np.linspace(5, 7, 75),   alpha=0.9, label= '6 um; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' mean: ' + str(np.round(np.mean(y6_mix),2)) +' cnt: '+ str(y6_mix.shape[0]))
+plt.hist((y7_mix), bins=np.linspace(6, 8.5, 75), alpha=0.9, label= '7 um; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' mean: ' + str(np.round(np.mean(y7_mix),2)) + ' cnt: '+ str(y7_mix.shape[0]))
 plt.title("check 6.2 - mixed particles")
 plt.xlabel("particle size (um)")
 plt.ylabel("Count")

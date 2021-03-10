@@ -129,3 +129,47 @@ model.evaluate(x_eval, y_eval)  # evaluate the model with ur validation data
 
 #tensorboard --logdir logs/fit
 
+
+
+##
+# tf.keras.layers.Dense(25, activation='relu'),
+# # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# tf.keras.layers.Dense(25, activation='selu'),
+# # tf.keras.layers.Dropout(0.2),
+##
+# tf.keras.layers.Dense(25, activation='relu'),
+# # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='relu'),
+# # tf.keras.layers.Dropout(0.2),

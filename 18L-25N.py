@@ -58,25 +58,25 @@ normalizer.adapt(x_train)  # adapts the normalization layer to the size of the t
 # Definition of the neural network
 model = tf.keras.Sequential([  # sequential= the layers in the network are arranged in the order we type them
     normalizer,
-    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='selu'),
     # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
-    tf.keras.layers.Dense(25, activation='relu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
     # tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])
@@ -105,7 +105,8 @@ tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram
 
 history1 = model.fit(x_train, y_train, batch_size=100, epochs=1000,
                      validation_data=(x_eval, y_eval),
-                     callbacks= [tensorboard_callback, es, sm]
+                     callbacks= [tensorboard_callback, es, sm],
+                     shuffle=False
                      )
 
 dp.show_train_history(history1)  # the function we made in data_prep
@@ -132,7 +133,7 @@ model.evaluate(x_eval, y_eval)  # evaluate the model with ur validation data
 
 
 ##
-# tf.keras.layers.Dense(25, activation='relu'),
+# tf.keras.layers.Dense(25, activation='selu'),
 # # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
 # tf.keras.layers.Dense(25, activation='selu'),
 # tf.keras.layers.Dense(25, activation='selu'),

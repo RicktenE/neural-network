@@ -91,7 +91,8 @@ tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram
 
 history1 = model.fit(x_train, y_train, batch_size=100, epochs=1000,
                      validation_data=(x_eval, y_eval),
-                     callbacks= [tensorboard_callback,es,sm]
+                     callbacks= [tensorboard_callback,es,sm],
+                     shuffle=False
                      )
 
 dp.show_train_history(history1)  # the function we made in data_prep

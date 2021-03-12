@@ -292,44 +292,22 @@ def prep_test_data(data_folder_test):  # puts mixed data in one array (single fr
 
 
 
-####################Train / evaluation  data
+
 # If using this data transpose everything and set window to 500 indicated as old data
 # data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
+# data_folder_test = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
 
-
-#data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\11-06\\"
-# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\11-17\\"
-#data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\12-07\\"
-# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\Combined_data\\"
-
-
-# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-06\\"
-# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
-# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\12-07\\"
-# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\Combined_data\\"
-
-#Directly in the matlab file for window size influence investigation
+####################Train / evaluation  data
 # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
 # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
 # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
-
+data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
 
 ####################Test data
-#If using this data transpose everything and set window to 500 indicated as old data
-# data_folder_test = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
-
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\11-17\\"
-
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-06\\"
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\11-17\\"
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\12-07\\"
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\baseline removed\\Combined_data\\"
-
-#Directly in the matlab file for window size influence investigation
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
-
+data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
 
 
 x_test=prep_test_data_allfreq(data_folder_test)

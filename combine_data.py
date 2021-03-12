@@ -152,7 +152,10 @@ l, data = read_txt(read_label)
 x_6_3 = np.transpose(data)
 # x_6_3 = np.array(data)
 x_6 = np.concatenate((x_6_1, x_6_2, x_6_3), axis=0)
-
+# # To test if the netwerk recognizes 6 from a different date; where 11-06 has a different flowrate
+# x_6 = np.concatenate((x_6_2, x_6_3), axis=0)
+# # To test if the netwerk recognizes 6 from a different date; now all flowrates are included in the training set
+# x_6 = np.concatenate((x_6_1, x_6_3), axis=0)
 
 # printing the shapes to check if everything goes well
 print('shape x_6_1', str(x_6_1.shape))

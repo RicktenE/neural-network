@@ -64,6 +64,7 @@ model = tf.keras.Sequential([  # sequential= the layers in the network are arran
     tf.keras.layers.Dense(100, activation='selu'),
     tf.keras.layers.Dense(50, activation='selu'),
     tf.keras.layers.Dense(50, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
     tf.keras.layers.Dense(10, activation='selu'),
     #tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')

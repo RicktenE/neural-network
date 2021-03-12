@@ -197,7 +197,7 @@ def make_training_set_allfreq_os(data_folder,
 
 # ######################################################
 #     # Making sure all data sets are equally large. If 2000 data points are trained on 6 mu, the 5.6 will be counted as a 6 sooner then when it is trained on equal footing
-#     multiplier = 10
+#     multiplier = 1
 #
 #     ids5 = np.arange(len(y5))
 #     choices = np.random.choice(ids5, multiplier*min(leng5,leng6,leng7))
@@ -308,9 +308,9 @@ data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
 
 ####################Test data
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
-data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
 
 
 x_test=prep_test_data_allfreq(data_folder_test)

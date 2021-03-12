@@ -224,7 +224,7 @@ plt.hist((y5_mix), bins=np.linspace(4.5, 6, 75), alpha=0.9, label= '5 um; s.dev:
 plt.hist((y6_mix), bins=np.linspace(5, 7, 75),   alpha=0.9, label= '6 um; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' mean: ' + str(np.round(np.mean(y6_mix),2)) +' cnt: '+ str(y6_mix.shape[0]))
 plt.hist((y7_mix), bins=np.linspace(6, 8.5, 75), alpha=0.9, label= '7 um; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' mean: ' + str(np.round(np.mean(y7_mix),2)) + ' cnt: '+ str(y7_mix.shape[0]))
 
-plt.title("train:5,6,7--combined test: mixed um --11-17 ")
+plt.title("train:5,6,7--combined test: 6 um --11-17 ")
 
 plt.xlabel("particle size (um)")
 plt.ylabel("Count")

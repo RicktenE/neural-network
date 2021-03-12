@@ -256,8 +256,8 @@ def make_training_set_allfreq_os(data_folder,
 ###Prepping Test data
 
 def prep_test_data_allfreq(data_folder_test):  # prepares the mixed beads data by putting frequencies next to each other
-    read_label = data_folder_test + "x1_data_mix.txt"
-    # read_label = data_folder_test + "x_data_6.txt"
+    # read_label = data_folder_test + "x1_data_mix.txt"
+    read_label = data_folder_test + "x_data_6.txt"
     l, data = read_txt(read_label)
     x_mix = np.transpose(data)
     # x_mix = data

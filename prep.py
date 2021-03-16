@@ -93,25 +93,25 @@ def make_training_set_allfreq_os(data_folder,
     SIZE = wdw*2  # Define the window size around the peaks as chosen in matlab
 
 
-    # read_label = data_folder + "x_data_45.txt" # Name of the data for 5 micrometer beads
-    # l, data = read_txt(read_label)
-    # # print(len(data))
-    # x45 = np.transpose(data) #for old data
+    read_label = data_folder + "x_data_45.txt" # Name of the data for 4.5 micrometer beads
+    l, data = read_txt(read_label)
+    # print(len(data))
+    x45 = np.transpose(data)
     # x45 = data
-    # # print("shape x45 before concatenate" + str(x5.shape))
-    # leng45 = int(len(x45[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
-    # # leng45 = leng
-    # print("variable leng45: "+ str(leng5))
-    # xx45 = np.zeros((6*SIZE, leng5))  # initialize an array of 6000 by the number of samples
-    # a = 0
-    # for i in range(0, l[1], 6):
-    #     xx45[:, a] = np.concatenate((x45[i, :SIZE], x45[i + 1, :SIZE], x45[i + 2, :SIZE], x45[i + 3, :SIZE],
-    #                                 x45[i + 4, :SIZE], x45[i + 5, :SIZE]),
-    #                                axis=0)  # put the first 6 data from the txt next to each other
-    #     a += 1
-    # x45 = xx45
-    # print("shape x5 after concatenate: "+str(x5.shape))
-    # y45 = np.ones(leng5) * 4.5
+    # print("shape x45 before concatenate" + str(x45.shape))
+    leng45 = int(len(x45[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
+    # leng45 = leng
+    # print("variable leng45: "+ str(leng45))
+    xx45 = np.zeros((6*SIZE, leng45))  # initialize an array of 6000 by the number of samples
+    a = 0
+    for i in range(0, l[1], 6):
+        xx45[:, a] = np.concatenate((x45[i, :SIZE], x45[i + 1, :SIZE], x45[i + 2, :SIZE], x45[i + 3, :SIZE],
+                                    x45[i + 4, :SIZE], x45[i + 5, :SIZE]),
+                                   axis=0)  # put the first 6 data from the txt next to each other
+        a += 1
+    x45 = xx45
+    # print("shape x45 after concatenate: "+str(x5.shape))
+    y45 = np.ones(leng45) * 4.5
 
     read_label = data_folder + "x_data_5.txt" # Name of the data for 5 micrometer beads
     l, data = read_txt(read_label)
@@ -167,13 +167,19 @@ def make_training_set_allfreq_os(data_folder,
         a += 1
     x7 = xx7
     y7 = np.ones(leng7) * 7
+
+    x45 = np.transpose(x45)
     x5 = np.transpose(x5)
     x6 = np.transpose(x6)
     x7 = np.transpose(x7)
+
+    s45 = int(np.round(len(y45) * split_ratio))
     s5 = int(np.round(len(y5) * split_ratio))
     s6 = int(np.round(len(y6) * split_ratio))
     s7 = int(np.round(len(y7) * split_ratio))
     if split_ratio == 0:
+        x45 = x45[s45:, :]
+        y45 = y45[s45:, :]
         x5 = x5[s5:, :]
         y5 = y5[s5:]
         x6 = x6[s6:, :]
@@ -181,6 +187,10 @@ def make_training_set_allfreq_os(data_folder,
         x7 = x7[s7:, :]
         y7 = y7[s7:]
     else:
+        x45_eval = x45[0:s45, :]
+        y45_eval = y45[0:s45]
+        x45 = x45[s45:, :]
+        y45 = y45[s45:]
         x5_eval = x5[0:s5, :]
         y5_eval = y5[0:s5]
         x5 = x5[s5:, :]
@@ -214,24 +224,26 @@ def make_training_set_allfreq_os(data_folder,
 #     xx7 = x7[choices]
 #     x7 = xx7
 ################################################################################
-
+    x45 = np.transpose(x45)
     x5 = np.transpose(x5)
     x6 = np.transpose(x6)
     x7 = np.transpose(x7)
 
     #printing out the shape of the final data
+    print("x45 shape" + str(x45.shape))
     print("x5 shape" + str(x5.shape))
     print("x6 shape" + str(x6.shape))
     print("x7 shape" + str(x7.shape))
 
     # combine 5,6,7um data in one array
+    x45_eval = np.transpose(x45_eval)
     x5_eval = np.transpose(x5_eval)
     x6_eval = np.transpose(x6_eval)
     x7_eval = np.transpose(x7_eval)
-    x_train = np.concatenate((x5, x6, x7), axis=1)
-    y_train = np.concatenate((y5, y6, y7), axis=0)
-    x_eval = np.concatenate((x5_eval, x6_eval, x7_eval), axis=1)
-    y_eval = np.concatenate((y5_eval, y6_eval, y7_eval), axis=0)
+    x_train = np.concatenate((x45,x5, x6, x7), axis=1)
+    y_train = np.concatenate((y45,y5, y6, y7), axis=0)
+    x_eval = np.concatenate((x45_eval,x5_eval, x6_eval, x7_eval), axis=1)
+    y_eval = np.concatenate((y45_eval,y5_eval, y6_eval, y7_eval), axis=0)
     # x_train = np.concatenate((x5,x7), axis=1)
     # y_train = np.concatenate((y5,y7), axis=0)
     # x_eval = np.concatenate((x5_eval,x7_eval), axis=1)

@@ -95,7 +95,19 @@ x_mix = np.transpose(x_mix)# to keep all data in the same shape as the non combi
 print('shape x_mix 12-07 (5um,6um,7um)', str(x_mix.shape))
 np.savetxt(data_folder + 'x1_data_mix.txt', x_mix, delimiter='\t', newline='\n')
 
+###########Here the x_data_5.txt files from all dates are combined into x_data_5.txt
+###########11-06 has no 5 um data
 
+data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
+read_label = data_folder + "x_data_45.txt"
+l, data = read_txt(read_label)
+x_45 = np.transpose(data)
+# x_45 = np.array(data)
+
+x_45 = np.transpose(x_45)# to keep all data in the same shape as the non combined data
+print('shape x_45 combined ', str(x_45.shape))
+data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+np.savetxt(data_folder + 'x_data_45.txt', x_45, delimiter='\t', newline='\n')
 
 ###########Creating the combined data files where all dates are included
 ###########Here the x_data_5.txt files from all dates are combined into x_data_5.txt

@@ -207,14 +207,19 @@ for i in range(len(test_predictions_mix)):
 # plt.show()
 
 #######################################
+k = 1
 d = 1
 e = 1
 f = 1
+y45_mix = np.zeros((len(test_predictions_mix)))
 y5_mix = np.zeros((len(test_predictions_mix)))
 y6_mix = np.zeros((len(test_predictions_mix)))
 y7_mix = np.zeros((len(test_predictions_mix)))
 for i in range(len(test_predictions_mix)):
-    if test_predictions_mix[i] <= 5.5:
+    if test_predictions_mix[i] <= 4.75:
+        y45_mix[k] = test_predictions_mix[i]
+        k += 1
+    elif test_predictions_mix[i] > 4.75 and test_predictions_mix[i] <= 5.5:
         y5_mix[d] = test_predictions_mix[i]
         d += 1
     elif test_predictions_mix[i] > 5.5 and test_predictions_mix[i] <= 6.5:
@@ -224,16 +229,18 @@ for i in range(len(test_predictions_mix)):
         y7_mix[f] = test_predictions_mix[i]
         f += 1
 
+y45_mix = y45_mix[y45_mix != 0]
 y5_mix = y5_mix[y5_mix != 0]
 y6_mix = y6_mix[y6_mix != 0]
 y7_mix = y7_mix[y7_mix != 0]
 
 plt.figure(figsize=(8, 6))
+plt.hist((y45_mix), bins=np.linspace(4, 5, 75), alpha=0.9, label= '4.5 um; s.dev:  ' + str(np.round(np.std(y45_mix),2)) + ' mean: '+ str(np.round(np.mean(y45_mix),2)) + ' cnt: '+ str(y45_mix.shape[0]))
 plt.hist((y5_mix), bins=np.linspace(4.5, 6, 75), alpha=0.9, label= '5 um; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' mean: '+ str(np.round(np.mean(y5_mix),2)) + ' cnt: '+ str(y5_mix.shape[0]))
 plt.hist((y6_mix), bins=np.linspace(5, 7, 75),   alpha=0.9, label= '6 um; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' mean: ' + str(np.round(np.mean(y6_mix),2)) +' cnt: '+ str(y6_mix.shape[0]))
 plt.hist((y7_mix), bins=np.linspace(6, 8.5, 75), alpha=0.9, label= '7 um; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' mean: ' + str(np.round(np.mean(y7_mix),2)) + ' cnt: '+ str(y7_mix.shape[0]))
 
-plt.title("train:5,6,7--combined test: mixed um --11-17 ")
+plt.title("train:4.5,5,6,7--combined test: mixed --11-17 ")
 
 plt.xlabel("particle size (um)")
 plt.ylabel("Count")

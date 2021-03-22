@@ -25,9 +25,9 @@ print(tf.__version__)
 
 # uncomment this if you want to seed the random generator
 from numpy.random import seed #
-seed(10)# keras seed fixing
+seed(5)# keras seed fixing
 import tensorflow as tf
-tf.random.set_seed(10)# tensorflow seed fixing
+tf.random.set_seed(5)# tensorflow seed fixing
 print(tf.version.VERSION)
 
 
@@ -58,9 +58,7 @@ normalizer.adapt(x_train)  # adapts the normalization layer to the size of the t
 # Definition of the neural network
 model = tf.keras.Sequential([  # sequential= the layers in the network are arranged in the order we type them
     normalizer,
-    tf.keras.layers.Dense(25, activation='selu'),
-    # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),    # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
     tf.keras.layers.Dense(25, activation='selu'),
     tf.keras.layers.Dense(25, activation='selu'),
     tf.keras.layers.Dense(25, activation='selu'),
@@ -77,7 +75,8 @@ model = tf.keras.Sequential([  # sequential= the layers in the network are arran
     tf.keras.layers.Dense(25, activation='selu'),
     tf.keras.layers.Dense(25, activation='selu'),
     tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(25, activation='selu'),
+    # # tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])
 
@@ -174,3 +173,66 @@ model.evaluate(x_eval, y_eval)  # evaluate the model with ur validation data
 # tf.keras.layers.Dense(25, activation='relu'),
 # tf.keras.layers.Dense(25, activation='relu'),
 # # tf.keras.layers.Dropout(0.2),
+
+# tf.keras.layers.Dense(25, activation='sigmoid'),  # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# tf.keras.layers.Dense(25, activation='sigmoid'),
+# # # tf.keras.layers.Dropout(0.2),
+
+# tf.keras.layers.Dense(25,
+#                       activation='tanh'),  # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# tf.keras.layers.Dense(25, activation='tanh'),
+# # # tf.keras.layers.Dropout(0.2),
+
+# tf.keras.layers.Dense(25,
+#                       activation='elu'),  # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# tf.keras.layers.Dense(25, activation='elu'),
+# # # tf.keras.layers.Dropout(0.2),
+

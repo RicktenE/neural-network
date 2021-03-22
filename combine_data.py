@@ -43,6 +43,7 @@ x_6_2 = np.transpose(data)
 # x_6_2 = np.array(data)
 
 x_6 = np.concatenate((x_6_1, x_6_2), axis=0)
+# x_6 = x_6_1
 
 print('shape x_6_1', str(x_6_1.shape))
 print('shape x_6_2', str(x_6_2.shape))
@@ -152,26 +153,31 @@ l, data = read_txt(read_label)
 x_6_1 = np.array(data)
 # print('shape x_6_1 combined 11-06 read out', str(x_6_1.shape))
 
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
-read_label = data_folder + "x_data_6.txt"
-l, data = read_txt(read_label)
-x_6_2 = np.transpose(data)
-# x_6_2 = np.array(data)
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+# read_label = data_folder + "x_data_6.txt"
+# l, data = read_txt(read_label)
+# x_6_2 = np.transpose(data)
+# # x_6_2 = np.array(data)
+# # print('shape x_6_2 combined 11-17 read out', str(x_6_2.shape))
 
 data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
 read_label = data_folder + "x_data_6.txt"
 l, data = read_txt(read_label)
 x_6_3 = np.transpose(data)
 # x_6_3 = np.array(data)
-x_6 = np.concatenate((x_6_1, x_6_2, x_6_3), axis=0)
-# # To test if the netwerk recognizes 6 from a different date; where 11-06 has a different flowrate
+# print('shape x_6_3 combined 12-07 read out', str(x_6_3.shape))
+
+# x_6 = np.concatenate((x_6_1, x_6_2, x_6_3), axis=0)
+
+# # # To test if the netwerk recognizes 6 from a different date; where 11-06 has a different flowrate
 # x_6 = np.concatenate((x_6_2, x_6_3), axis=0)
-# # To test if the netwerk recognizes 6 from a different date; now all flowrates are included in the training set
-# x_6 = np.concatenate((x_6_1, x_6_3), axis=0)
+
+# To test if the netwerk recognizes 6 from a different date; now all flowrates are included in the training set
+x_6 = np.concatenate((x_6_1, x_6_3), axis=0)
 
 # printing the shapes to check if everything goes well
 print('shape x_6_1', str(x_6_1.shape))
-print('shape x_6_2', str(x_6_2.shape))
+# print('shape x_6_2', str(x_6_2.shape))
 print('shape x_6_3', str(x_6_3.shape))
 
 
@@ -217,12 +223,12 @@ np.savetxt(data_folder + 'x_data_7.txt', x_7, delimiter='\t', newline='\n')
 ########### Here the x1_data_mix.txt files from all dates are combined into x1_data_mix.txt
 ########### All 3 dates have mixed um beads
 ########### But 11-06 has mixed 4.5um and 6um
-########## And 11-17 and 12-07 have 5,6,7um mixed. Therefore I leave out 11-06
-## data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
-## read_label = data_folder + "x_data_6.txt"
-## l, data = read_txt(read_label)
-# # x_6_1 = np.transpose(data)
-###x_6_1 = np.array(data) # this is already transposed from the previous combining of the data of 6um of 11-06
+########## And 11-17 and 12-07 have 5,6,7um mixed. Therefore I could leave out 11-06
+data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
+read_label = data_folder + "x1_data_mix.txt"
+l, data = read_txt(read_label)
+x_mix_1 = np.transpose(data)
+###x_mix_1 = np.array(data) # this is already transposed from the previous combining of the data of 6um of 11-06
 
 data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
 read_label = data_folder + "x1_data_mix.txt"
@@ -235,19 +241,20 @@ read_label = data_folder + "x1_data_mix.txt"
 l, data = read_txt(read_label)
 x_mix_3 = np.transpose(data)
 # x_mix_3 = np.array(data)
-# x_mix = np.concatenate((x_mix_1, x_mix_2, x_mix_3), axis=0)
-x_mix = np.concatenate((x_mix_2, x_mix_3), axis=0)
+x_mix = np.concatenate((x_mix_1, x_mix_2, x_mix_3), axis=0)
+# x_mix = np.concatenate((x_mix_2, x_mix_3), axis=0)
 
 
 # printing the shapes to check if everything goes well
-# print('shape x_6_1', str(x_6_1.shape))
+print('shape x_mix_1', str(x_mix_1.shape))
 print('shape x_mix_2', str(x_mix_2.shape))
 print('shape x_mix_3', str(x_mix_3.shape))
 # print('shape x1_data_mix combined all dates', str(x_mix.shape))
 
 
 x_mix = np.transpose(x_mix) # to keep all data in the same shape as the non combined data
-print('shape x1_data_mix combined 11-17 and 12-07', str(x_mix.shape))
+# print('shape x1_data_mix combined 11-17 and 12-07 (5um,6um,7um)', str(x_mix.shape))
+print('shape x1_data_mix combined All dates (4.5um,5um,6um,7um)', str(x_mix.shape))
 data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
 np.savetxt(data_folder + 'x1_data_mix.txt', x_mix, delimiter='\t', newline='\n')
 

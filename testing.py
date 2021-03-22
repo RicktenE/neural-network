@@ -16,6 +16,17 @@ from tensorflow.keras.layers.experimental import preprocessing
 # from tensorflow.keras.layers import Embedding
 # from tqdm import tqdm
 import shap
+#
+# plt.rcParams.update({
+#     "text.usetex": True,
+#     "font.family": "sans-serif",
+#     "font.sans-serif": ["Helvetica"]})
+# ## for Palatino and other serif fonts use:
+# plt.rcParams.update({
+#     "text.usetex": True,
+#     "font.family": "serif",
+#     "font.serif": ["Palatino"],
+# })
 
 print(tf.__version__)
 
@@ -43,34 +54,25 @@ SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
 # remake our model
 model = tf.keras.Sequential([
     preprocessing.Normalization(input_shape=[6*SIZE]),
-    tf.keras.layers.Dense(250, activation='selu'),
-    # Dense=fully connected layer. 200= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(250, activation='selu'),
-    tf.keras.layers.Dense(100, activation='selu'),
-    tf.keras.layers.Dense(100, activation='selu'),
-    tf.keras.layers.Dense(50, activation='selu'),
-    tf.keras.layers.Dense(50, activation='selu'),
     tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(10, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
+    # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
     # # tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])
@@ -97,42 +99,42 @@ print(type(test_predictions))
 # a1 = plt.axes(aspect='equal')
 # plt.scatter(y_eval, test_predictions)
 # plt.title("check 1 - x_eval")
-# plt.xlabel('True Values [um]')
-# plt.ylabel('Predictions [um]')
+# plt.xlabel('True Values 'r'[$\mu$m]')
+# plt.ylabel('Predictions 'r'[$\mu$m]')
 # plt.show()
 
-# # dswarm=pd.DataFrame(data=[y_eval,test_predictions])
-# # ax=sns.swarmplot(data=dswarm)
+# dswarm=pd.DataFrame(data=[y_eval,test_predictions])
+# ax=sns.swarmplot(data=dswarm)
 # print("check 2 ")
 # ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1)
 # plt.title("check 2 - x_eval")
-# plt.xlabel('True Values [um]')
-# plt.ylabel('Predictions [um]')
+# plt.xlabel('True Values 'r'[$\mu$m]')
+# plt.ylabel('Predictions 'r'[$\mu$m]')
 # plt.show()
-
+#
 # print("check 3 ")
 # ax = sns.boxplot(x=y_eval, y=test_predictions, whis=np.inf)
 # ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1.2, color=".2")
 # plt.title("check 3 - x_eval")
-# plt.xlabel('True Values [um]')
-# plt.ylabel('Predictions [um]')
+# plt.xlabel('True Values 'r'[$\mu$m]')
+# plt.ylabel('Predictions 'r'[$\mu$m]')
 # plt.show()
 
-# print("check 4 ")
-# ax = sns.violinplot(x=y_eval, y=test_predictions, inner=None)
-# ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1, color="white", edgecolor="gray")
-# plt.title("check 4 - x_eval")
-# plt.xlabel('True Values [um]')
-# plt.ylabel('Predictions [um]')
-# plt.show()
+print("check 4 ")
+ax = sns.violinplot(x=y_eval, y=test_predictions, inner=None)
+ax = sns.swarmplot(x=y_eval, y=test_predictions, size=0.8, color="white", edgecolor="gray")
+plt.title("check 4 - x_eval")
+plt.xlabel("True Values "r"[$\mu$m]")
+plt.ylabel("Predictions "r"[$\mu$m]")
+plt.show()
 
 
 # print("check 4.2 ")
 # ax=sns.violinplot(x=y_eval,y=test_predictions,inner=None)
 # ax=sns.stripplot(x=y_eval,y=test_predictions,size=1.2,color="white",edgecolor="gray")
 # plt.title("check 4.2 - x_eval")
-# plt.xlabel('True Values [um]')
-# plt.ylabel('Predictions [um]')
+# plt.xlabel('True Values 'r'[$\mu$m]')
+# plt.ylabel('Predictions 'r'[$\mu$m]')
 # plt.show()
 
 # print(np.min(test_predictions))
@@ -166,7 +168,7 @@ y6 = y6[y6 != 0]
 # plt.hist((y6), bins=np.linspace(5, 7, 50), alpha=0.9)
 # plt.hist((y7), bins=np.linspace(6, 8.5, 50), alpha=0.9)
 # plt.title("check 5- x_eval data")
-# plt.xlabel("particle size (um)")
+# plt.xlabel("particle size "r"[$\mu$m]")
 # plt.ylabel("Count")
 # plt.show()
 # print("5um std  x_eval: " + str(np.std(y5)))
@@ -202,24 +204,24 @@ for i in range(len(test_predictions_mix)):
 
 # plt.hist((test_predictions_mix), bins=100)
 # plt.title("check 6 - mixed particles")
-# plt.xlabel("particle size (um)")
+# plt.xlabel("particle size "r"[$\mu$m]")
 # plt.ylabel("Count")
 # plt.show()
 
 #######################################
-k = 1
-d = 1
-e = 1
-f = 1
+k = 0
+d = 0
+e = 0
+f = 0
 y45_mix = np.zeros((len(test_predictions_mix)))
 y5_mix = np.zeros((len(test_predictions_mix)))
 y6_mix = np.zeros((len(test_predictions_mix)))
 y7_mix = np.zeros((len(test_predictions_mix)))
 for i in range(len(test_predictions_mix)):
-    if test_predictions_mix[i] <= 4.75:
+    if test_predictions_mix[i] <= 4.60:
         y45_mix[k] = test_predictions_mix[i]
         k += 1
-    elif test_predictions_mix[i] > 4.75 and test_predictions_mix[i] <= 5.5:
+    elif test_predictions_mix[i] > 4.60 and test_predictions_mix[i] <= 5.5:
         y5_mix[d] = test_predictions_mix[i]
         d += 1
     elif test_predictions_mix[i] > 5.5 and test_predictions_mix[i] <= 6.5:
@@ -240,9 +242,12 @@ plt.hist((y5_mix), bins=np.linspace(4.5, 6, 75), alpha=0.9, label= '5 um; s.dev:
 plt.hist((y6_mix), bins=np.linspace(5, 7, 75),   alpha=0.9, label= '6 um; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' mean: ' + str(np.round(np.mean(y6_mix),2)) +' cnt: '+ str(y6_mix.shape[0]))
 plt.hist((y7_mix), bins=np.linspace(6, 8.5, 75), alpha=0.9, label= '7 um; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' mean: ' + str(np.round(np.mean(y7_mix),2)) + ' cnt: '+ str(y7_mix.shape[0]))
 
-plt.title("train:4.5,5,6,7--combined test: mixed --11-17 ")
 
-plt.xlabel("particle size (um)")
+plt.suptitle(r"$\bf{Train}$: 4.5,5,6(not 11-17), 7 -- All days  " + r"$\bf{Test}$: 6 "r"$\mu$m -- 11-17""\n" + r"$\bf{Activation}$ = selu  "+ r"$\bf{ Network:}$ 25*18")
+# plt.suptitle(r"$\bf{Train}$: 4.5,5,6(not 11-17), 7 -- All days  " + r"$\bf{Test}$: mixed "r"$\mu$m -- 11-17""\n" + r"$\bf{Activation}$ = selu  "+ r"$\bf{ Network:}$ 25*18")
+
+
+plt.xlabel("particle size "r"[$\mu$m]")
 plt.ylabel("Count")
 plt.legend()
 # plt.legend((y5_mix[1], y6_mix[1], y7_mix[1]), ('std dev 5 um' + str(np.std(y5_mix)), 'std dev 6 um' + str(np.std(y6_mix)), 'std dev 7 um' + str(np.std(y7_mix))))
@@ -261,32 +266,37 @@ print("shape of predictions on x_eval  " + str(test_predictions.shape))
 # dx_train=pd.DataFrame(data=x_train)
 
 
-###### this block is for the shapley values
+# ###### this block is for the shapley values
+#
 # shap.initjs()
-# # print("check 7")
+# t45 = []
 # t5 = []
 # t6 = []
 # t7 = []
 # for i in range(len(y_eval)):
-#     if y_eval[i] == 5:
+#     if y_eval[i] == 4.5:
+#         t45.append(x_eval[i, :])
+#     elif y_eval[i] == 5:
 #         t5.append(x_eval[i, :])
-#
 #     elif y_eval[i] == 6:
 #         t6.append(x_eval[i, :])
 #     elif y_eval[i] == 7:
 #         t7.append(x_eval[i, :])
 # # we create the unmixed data :)
+# eval45 = np.array(t45)  # eval45 contains all the data of 4.5 um
 # eval5 = np.array(t5)  # eval5 contains all the data of 5um
 # eval6 = np.array(t6)  # eval6 contains all the data of 6um
 # eval7 = np.array(t7)  # eval7 contains all the data of 7um
 #
 # background = x_train[np.random.choice(x_train.shape[0], 100, replace=False)]
+# print("type of background: " + str(type(background)))
+# # print("shape of background: " + str((background.shape)))
 # # A network explainer is created here using 200 data points
 # e = shap.DeepExplainer(model, x_train[:200, :])
 #
 # # asking the shapley values for the 6um using the eval6
 # shap_values = e.shap_values(eval6)
-# # print(shap_values)
+# print(shap_values)
 # # plot the feature attributions
 # shap.summary_plot(shap_values, eval6, max_display=10, )
 #
@@ -302,19 +312,20 @@ print("shape of predictions on x_eval  " + str(test_predictions.shape))
 # plt.show()
 #
 # # save the values in a txt so we analyze in matlab
-# # save_shap_file = "C:\\Users\\Papadimitriouv\\Documents\\ML\\regress\\shap\\all_freq6000\\6um.txt"
+# # save_shap_file = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\neural network\\shap\\all_freq6000\\6um.txt"
 # # np.savetxt(save_shap_file, a, delimiter=',')
 # # a1 = np.sum(np.abs(a), axis=0)
 # # print(a.shape)
+# # plt.plot(a1)
+# # plt.show()
+# # a1 = np.sum(a, axis=0)
+# print(a.shape)
 # plt.plot(a1)
 # plt.show()
-# a1 = np.sum(a, axis=0)
-# # print(a.shape)
-# plt.plot(a1)
-# plt.show()
-# # np.save(save_eval_label_file,y_eval)
-# # explainer = shap.KernelExplainer(f, dx_train.iloc[:50,:])
-# # shap_values = explainer.shap_values(x_train[299,:], nsamples=500)
-# # shap.force_plot(explainer.expected_value, shap_values, x_train[299,:])
+# np.save(save_eval_label_file,y_eval)
+# explainer = shap.KernelExplainer(f, dx_train.iloc[:50,:])
+# shap_values = explainer.shap_values(x_train[299,:], nsamples=500)
+# shap.force_plot(explainer.expected_value, shap_values, x_train[299,:])
+
 
 

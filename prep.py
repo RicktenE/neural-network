@@ -240,14 +240,34 @@ def make_training_set_allfreq_os(data_folder,
     x5_eval = np.transpose(x5_eval)
     x6_eval = np.transpose(x6_eval)
     x7_eval = np.transpose(x7_eval)
+
+    ########## Here below you define with what sets you want to train your network
+    ######### e.g. If you don't include 6um so that you can test interpolation with 6um
+
+    # All training data
     x_train = np.concatenate((x45,x5, x6, x7), axis=1)
     y_train = np.concatenate((y45,y5, y6, y7), axis=0)
     x_eval = np.concatenate((x45_eval,x5_eval, x6_eval, x7_eval), axis=1)
     y_eval = np.concatenate((y45_eval,y5_eval, y6_eval, y7_eval), axis=0)
-    # x_train = np.concatenate((x5,x7), axis=1)
-    # y_train = np.concatenate((y5,y7), axis=0)
-    # x_eval = np.concatenate((x5_eval,x7_eval), axis=1)
-    # y_eval = np.concatenate((y5_eval,y7_eval), axis=0)
+
+    ## Exclude 5 um
+    # x_train = np.concatenate((x45,x6,x7), axis=1)
+    # y_train = np.concatenate((y45,y6,y7), axis=0)
+    # x_eval = np.concatenate((x45_eval, x6_eval,x7_eval), axis=1)
+    # y_eval = np.concatenate((y45_eval, y6_eval,y7_eval), axis=0)
+
+    ## Exclude 6um
+    # x_train = np.concatenate((x45,x5,x7), axis=1)
+    # y_train = np.concatenate((y45,y5,y7), axis=0)
+    # x_eval = np.concatenate((x45_eval, x5_eval,x7_eval), axis=1)
+    # y_eval = np.concatenate((y45_eval, y5_eval,y7_eval), axis=0)
+
+    # ## Exclude 7um
+    # x_train = np.concatenate((x45,x5,x6), axis=1)
+    # y_train = np.concatenate((y45,y5,y6), axis=0)
+    # x_eval = np.concatenate((x45_eval, x5_eval,x6_eval), axis=1)
+    # y_eval = np.concatenate((y45_eval, y5_eval,y6_eval), axis=0)
+
     x_train = np.transpose(x_train)
     x_eval = np.transpose(x_eval)
     print("x_train shape " +str(x_train.shape))
@@ -268,10 +288,11 @@ def make_training_set_allfreq_os(data_folder,
 ###Prepping Test data
 
 def prep_test_data_allfreq(data_folder_test):  # prepares the mixed beads data by putting frequencies next to each other
-    read_label = data_folder_test + "x1_data_mix.txt"
+    # read_label = data_folder_test + "x1_data_mix.txt"
     # read_label = data_folder_test + "x_data_45.txt"
     # read_label = data_folder_test + "x_data_5.txt"
-    # read_label = data_folder_test + "x_data_6.txt"
+    read_label = data_folder_test + "x_data_6.txt"
+    # read_label = data_folder_test + "x_data_6_2.txt"
     # read_label = data_folder_test + "x_data_7.txt"
     l, data = read_txt(read_label)
     x_mix = np.transpose(data)

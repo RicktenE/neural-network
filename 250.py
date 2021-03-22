@@ -25,9 +25,9 @@ print(tf.__version__)
 
 # uncomment this if you want to seed the random generator
 from numpy.random import seed #
-seed(11)# keras seed fixing
+seed(5)# keras seed fixing
 import tensorflow as tf
-tf.random.set_seed(11)# tensorflow seed fixing
+tf.random.set_seed(5)# tensorflow seed fixing
 print(tf.version.VERSION)
 
 

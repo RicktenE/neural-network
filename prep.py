@@ -38,7 +38,11 @@ def show_train_history(history1):  # function for displaying the training result
     plt.show()
 
 
-#Preparing training and evaluation data
+#####################################################################################
+##################### Preparing training and evaluation data ########################
+#####################################################################################
+#####################################################################################
+#####################################################################################
 def make_training_set_allfreq_os(split_ratio):  # similar to training set but this one puts all frequencies next to each other
 
  ####Initiating the function with some variable choices.
@@ -46,7 +50,12 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
     SIZE = wdw*2  # Define the window size around the peaks as chosen in matlab
     corrected_values = True #To chose this option is to chose to train the network with the corrected diameter as measured in Douwe's experiment.
     exclude = 0  # Here you can choose which particles you want to exclude from the training set to check inter or extrapolation e.g. exclude = 5
-    date = 1117 #  Choose date = 0 for combined data otherwise enter date. e.g. 6 nov = 1106
+    date = 0 #  Choose date = 0 for combined data otherwise enter date. e.g. 6 nov = 1106
+ #####################################################################################
+ #####################################################################################
+ #####################################################################################
+ #####################################################################################
+ #####################################################################################
 
 ########################################################################
     if date == 1106:
@@ -66,10 +75,10 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
         # print(len(data))
         x45 = np.transpose(data)
         # x45 = data
-        print("shape x45 before concatenate" + str(x45.shape))
+        # print("shape x45 before concatenate" + str(x45.shape))
         leng45 = int(len(x45[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
         leng45 = leng45
-        print("variable leng45: "+ str(leng45))
+        # print("variable leng45: "+ str(leng45))
         xx45 = np.zeros((6*SIZE, leng45))  # initialize an array of 6000 by the number of samples
         a = 0
         for i in range(0, l[1], 6):
@@ -78,7 +87,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
                                        axis=0)  # put the first 6 data from the txt next to each other
             a += 1
         x45 = xx45
-        print("shape x45 after concatenate: "+str(x45.shape))
+        # print("shape x45 after concatenate: "+str(x45.shape))
         x45 = np.transpose(x45)
 
         if corrected_values == True:
@@ -88,6 +97,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
                 read_label2 = data_folder + "D45_cor_combined.txt"
             l, data2 = read_txt(read_label2)
             y45 = data2
+            # print("shape y45 " + str(y45.shape))
         else:
             y45 = np.ones(leng45) * 4.5
 
@@ -98,10 +108,10 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
         # print(len(data))
         x5 = np.transpose(data)
         # x5 = data
-        print("shape x5 before concatenate" + str(x5.shape))
+        # print("shape x5 before concatenate" + str(x5.shape))
         leng5 = int(len(x5[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
         # leng5 = leng
-        print("variable leng5: "+ str(leng5))
+        # print("variable leng5: "+ str(leng5))
         xx5 = np.zeros((6*SIZE, leng5))  # initialize an array of 6000 by the number of samples
         a = 0
         for i in range(0, l[1], 6):
@@ -110,7 +120,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
                                        axis=0)  # put the first 6 data from the txt next to each other
             a += 1
         x5 = xx5
-        print("shape x5 after concatenate: "+str(x5.shape))
+        # print("shape x5 after concatenate: "+str(x5.shape))
         x5 = np.transpose(x5)
 
         if corrected_values == True:
@@ -118,22 +128,23 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
                 read_label2 = data_folder + "D5_cor_11-17.txt"
             elif date == 1207:
                 read_label2 = data_folder + "D5_cor_12-07.txt"
-            elif date == combined:
+            elif date == 0:
                 read_label2 = data_folder + "D5_cor_combined.txt"
             l, data2 = read_txt(read_label2)
             y5 = data2
+            # print("shape y5 " + str(y5.shape))
         else:
             y5 = np.ones(leng5) * 5
-        print("shape y5 " + str(y5.shape))
 
     #collecting data of 6 um beads. 6um beads are in all data sets, therefore the if statement is more for esthetic reasons for an overall organisation of the file
-    if date != 999:
+    if date != 123456789:
         read_label = data_folder + "x_data_6.txt"
         l, data = read_txt(read_label)
-        x6 = np.transpose(data)
-        # x6 = data
+        if date != 1106:
+            x6 = np.transpose(data)
+        else:
+            x6 = data
         leng6 = int(len(x6[:, SIZE]) / 6)
-        # leng6=leng
         # print(leng6)
         xx6 = np.zeros((6*SIZE, leng6))
         a = 0
@@ -143,6 +154,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
                                        axis=0)
            a += 1
         x6 = xx6
+        # print("shape x6 after concatenate: " + str(x6.shape))
         x6 = np.transpose(x6)
 
         if corrected_values == True:
@@ -152,10 +164,11 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
                 read_label2 = data_folder + "D6_cor_11-17.txt"
             elif date == 1207:
                 read_label2 = data_folder + "D6_cor_12-07.txt"
-            elif date == combined:
+            elif date == 0:
                 read_label2 = data_folder + "D6_cor_combined.txt"
             l, data2 = read_txt(read_label2)
             y6 = data2
+            # print("y6 shape " + str(y6.shape))
         else:
             y6 = np.ones(leng6) * 6
 
@@ -175,6 +188,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
                                        axis=0)
             a += 1
         x7 = xx7
+        # print("shape x7 after concatenate: "+str(x7.shape))
         x7 = np.transpose(x7)
 
         if corrected_values == True:
@@ -182,10 +196,11 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
                 read_label2 = data_folder + "D7_cor_11-17.txt"
             elif date == 1207:
                 read_label2 = data_folder + "D7_cor_12-07.txt"
-            elif date == combined:
+            elif date == 0:
                 read_label2 = data_folder + "D7_cor_combined.txt"
             l, data2 = read_txt(read_label2)
             y7 = data2
+            # print("y7 shape " + str(y7.shape))
         else:
             y7 = np.ones(leng7) * 7
 
@@ -230,10 +245,10 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
         x7 = np.transpose(x7)
 
         #printing out the shape of the final data
-        print("x45 shape" + str(x45.shape))
-        print("x5 shape" + str(x5.shape))
-        print("x6 shape" + str(x6.shape))
-        print("x7 shape" + str(x7.shape))
+        print("x45 shape train data (already split)" + str(x45.shape))
+        print("x5 shape train data (already split)" + str(x5.shape))
+        print("x6 shape train data (already split)" + str(x6.shape))
+        print("x7 shape train data (already split)" + str(x7.shape))
 
         # combine 5,6,7um data in one array
         x45_eval = np.transpose(x45_eval)
@@ -264,8 +279,8 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
         x6 = np.transpose(x6)
 
         # printing out the shape of the final data
-        print("x45 shape" + str(x45.shape))
-        print("x6 shape" + str(x6.shape))
+        print("x45 train data (already split) shape" + str(x45.shape))
+        print("x6 train data (already split) shape" + str(x6.shape))
 
         # combine 5,6,7um data in one array
         x45_eval = np.transpose(x45_eval)
@@ -302,9 +317,9 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
         x7 = np.transpose(x7)
 
         # printing out the shape of the final data
-        print("x5 shape" + str(x5.shape))
-        print("x6 shape" + str(x6.shape))
-        print("x7 shape" + str(x7.shape))
+        print("x5 shape train data (already split)" + str(x5.shape))
+        print("x6 shape train data (already split)" + str(x6.shape))
+        print("x7 shape train data (already split)" + str(x7.shape))
 
         # combine 5,6,7um data in one array
         x5_eval = np.transpose(x5_eval)
@@ -425,18 +440,22 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
         return x_train, y_train, x_eval, y_eval
 
 
-########## Preparing Test data
+#####################################################################################
+##################### Preparing test data ###########################################
+#####################################################################################
 def prep_test_data_allfreq(data_folder_test):  # prepares the mixed beads data by putting frequencies next to each other
     # read_label = data_folder_test + "x1_data_mix.txt"
     # read_label = data_folder_test + "x_data_45.txt"
     # read_label = data_folder_test + "x_data_5.txt"
     read_label = data_folder_test + "x_data_6.txt"
+    # read_label = data_folder_test + "x_data_6_1.txt"
     # read_label = data_folder_test + "x_data_6_2.txt"
     # read_label = data_folder_test + "x_data_7.txt"
+
     l, data = read_txt(read_label)
     x_mix = np.transpose(data)
     # x_mix = data
-    # wdw = 500  # for Old data
+
     wdw =500
     SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
     # print("l is " + str(l[1]))
@@ -458,30 +477,10 @@ def prep_test_data_allfreq(data_folder_test):  # prepares the mixed beads data b
     return x
 
 
-def prep_test_data(data_folder_test):  # puts mixed data in one array (single frequency)
-    read_label = data_folder_test + "x1_data_mix.txt"
-    l, data = read_txt(read_label)
-    x = np.transpose(data)
-
-    return x
-
-
-
-
-# If using this data transpose everything and set window to 500 indicated as old data
-# data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
-# data_folder_test = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
-
-####################Train / evaluation  data
-# # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
-# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
-# # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
-# # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
-
 ####################Test data
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
-data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
+# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
 
 ### Calling the test data
@@ -514,6 +513,23 @@ np.save(save_eval_data_file,x_eval)
 #
 # print(x_train.shape)
 # print(x_eval.shape)
+#####################################################################################
+#####################################################################################
+#####################################################################################
+###################################   Some old code below ###########################
+#####################################################################################
+#####################################################################################
+
+# If using this data transpose everything and set window to 500 indicated as old data
+# data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
+# data_folder_test = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
+
+####################Train / evaluation  data
+# # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+# # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
+# # data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+
 
 # # x_train=np.concatenate((x_train0,x_train1,x_train2,x_train3,x_train4,x_train5,x_train6,x_train7),axis=0)
 # def make_training_set(data_folder, split_ratio):  # creates the data set required for training and evaluation
@@ -578,3 +594,12 @@ np.save(save_eval_data_file,x_eval)
 #     xx7 = x7[choices]
 #     x7 = xx7
 ################################################################################
+
+
+# def prep_test_data(data_folder_test):  # puts mixed data in one array (single frequency)
+#     read_label = data_folder_test + "x1_data_mix.txt"
+#     l, data = read_txt(read_label)
+#     x = np.transpose(data)
+#
+#     return x
+

@@ -59,25 +59,25 @@ normalizer.adapt(x_train)  # adapts the normalization layer to the size of the t
 model = tf.keras.Sequential([  # sequential= the layers in the network are arranged in the order we type them
     normalizer,
     tf.keras.layers.Dense(25,
-                          activation='elu'),
+                          activation='selu'),
     # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
-    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='selu'),
     # # tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])
@@ -97,7 +97,7 @@ model.compile(
 # batch_size -> how many data should the network see before it updates the loss function (the higher the better, memory limited)
 # epochs -> how many rounds of training should you have. 1 epochs= the networks trains on the whole dataset
 # validation_data-> optional you can add the validation data(the network doesnt train on them) to evaluate the network during training
-es = tf.keras.callbacks.EarlyStopping(monitor='val_loss',verbose=1,mode='min',patience=100)
+es = tf.keras.callbacks.EarlyStopping(monitor='val_loss',verbose=1,mode='min',patience=150)
 sm=tf.keras.callbacks.ModelCheckpoint('best_model_weights.h5', monitor='val_loss', mode='min',save_weights_only=True, save_best_only=True,verbose=1)
 
 #log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")

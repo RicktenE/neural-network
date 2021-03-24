@@ -54,25 +54,26 @@ SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
 # remake our model
 model = tf.keras.Sequential([
     preprocessing.Normalization(input_shape=[6*SIZE]),
-    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25,
+                          activation='elu'),
     # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
+    tf.keras.layers.Dense(25, activation='elu'),
     # # tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])
@@ -120,13 +121,13 @@ print(type(test_predictions))
 # plt.ylabel('Predictions 'r'[$\mu$m]')
 # plt.show()
 
-print("check 4 ")
-ax = sns.violinplot(x=y_eval, y=test_predictions, inner=None)
-ax = sns.swarmplot(x=y_eval, y=test_predictions, size=0.8, color="white", edgecolor="gray")
-plt.title("check 4 - x_eval")
-plt.xlabel("True Values "r"[$\mu$m]")
-plt.ylabel("Predictions "r"[$\mu$m]")
-plt.show()
+# print("check 4 ")
+# ax = sns.violinplot(x=y_eval, y=test_predictions, inner=None)
+# ax = sns.swarmplot(x=y_eval, y=test_predictions, size=0.8, color="white", edgecolor="gray")
+# plt.title("check 4 - x_eval")
+# plt.xlabel("True Values "r"[$\mu$m]")
+# plt.ylabel("Predictions "r"[$\mu$m]")
+# plt.show()
 
 
 # print("check 4.2 ")
@@ -243,8 +244,9 @@ plt.hist((y6_mix), bins=np.linspace(5, 7, 75),   alpha=0.9, label= '6 um; s.dev:
 plt.hist((y7_mix), bins=np.linspace(6, 8.5, 75), alpha=0.9, label= '7 um; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' mean: ' + str(np.round(np.mean(y7_mix),2)) + ' cnt: '+ str(y7_mix.shape[0]))
 
 
-plt.suptitle(r"$\bf{Train}$: 4.5,5,6(not 11-17), 7 -- All days  " + r"$\bf{Test}$: 6 "r"$\mu$m -- 11-17""\n" + r"$\bf{Activation}$ = selu  "+ r"$\bf{ Network:}$ 25*18")
-# plt.suptitle(r"$\bf{Train}$: 4.5,5,6(not 11-17), 7 -- All days  " + r"$\bf{Test}$: mixed "r"$\mu$m -- 11-17""\n" + r"$\bf{Activation}$ = selu  "+ r"$\bf{ Network:}$ 25*18")
+# plt.suptitle(r"$\bf{Train}$: 4.5,5,6(not 11-17), 7 -- All days  " + r"$\bf{Test}$: 6 "r"$\mu$m -- 11-17""\n" + r"$\bf{Activation}$ = sigmoid  "+ r"$\bf{ Network:}$ 25*18")
+# plt.suptitle(r"$\bf{Train}$: 4.5,5,6(not 11-17), 7 -- All days  " + r"$\bf{Test}$: 6 "r"$\mu$m -- 12-07""\n" + r"$\bf{Activation}$ = sigmoid  "+ r"$\bf{ Network:}$ 25*18")
+plt.suptitle(r"$\bf{Train}$: 4.5,5,(no 6), 7 -- All days  " + r"$\bf{Test}$: 6 "r"$\mu$m -- 11-17""\n" + r"$\bf{Activation}$ = sigmoid  "+ r"$\bf{ Network:}$ 25*18")
 
 
 plt.xlabel("particle size "r"[$\mu$m]")

@@ -29,14 +29,14 @@ def norm01(data):  # normalize data between 0 and 1
 #####################################################################################
 #####################################################################################
 #####################################################################################
-def make_training_set_allfreq_os(split_ratio):  # similar to training set but this one puts all frequencies next to each other
+def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ratio):  # similar to training set but this one puts all frequencies next to each other
 
  ####Initiating the function with some variable choices.
-    wdw = 500  # Window around the peak, has to be the same as chosen in the pre processing matlab file
+    # wdw = 500  # Window around the peak, has to be the same as chosen in the pre processing matlab file
     SIZE = wdw*2  # Define the window size around the peaks as chosen in matlab
-    corrected_values = True  #To chose this option is to chose to train the network with the corrected diameter as measured in Douwe's experiment.
-    exclude = 0  # Here you can choose which particles you want to exclude from the training set to check inter or extrapolation e.g. exclude = 5
-    date = 0 #  Choose date = 0 for combined data otherwise enter date. e.g. 6 nov = 1106
+    # corrected_values = True  #To chose this option is to chose to train the network with the corrected diameter as measured in Douwe's experiment.
+    # exclude_size = 0  # Here you can choose which particles you want to exclude from the training set to check inter or extrapolation e.g. exclude = 5
+    # date = 0 #  Choose date = 0 for combined data otherwise enter date. e.g. 6 nov = 1106
  #####################################################################################
  #####################################################################################
  #####################################################################################
@@ -317,7 +317,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
     # e.g. If you don't include 6um so that you can test interpolation with 6um
 
     # All training data
-    if exclude == 0:
+    if exclude_size == 0:
         if date == 0:
             x_train = np.concatenate((x45,x5, x6, x7), axis=1)
             y_train = np.concatenate((y45,y5, y6, y7), axis=0)
@@ -334,8 +334,8 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
             x_eval = np.concatenate((x5_eval, x6_eval, x7_eval), axis=1)
             y_eval = np.concatenate((y5_eval, y6_eval, y7_eval), axis=0)
 
-    ## Exclude 4.5 um from training and evaluation set
-    elif exclude == 45:
+    ## exclude 4.5 um from training and evaluation set
+    elif exclude_size == 45:
         if date == 0:
             x_train = np.concatenate((x5, x6, x7), axis=1)
             y_train = np.concatenate((y5, y6, y7), axis=0)
@@ -353,7 +353,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
             y_eval = np.concatenate((y5_eval, y6_eval, y7_eval), axis=0)
 
     ## Exclude 5 um from training and evaluation set
-    elif exclude == 5:
+    elif exclude_size == 5:
         if date == 0:
             x_train = np.concatenate((x45,  x6, x7), axis=1)
             y_train = np.concatenate((y45,  y6, y7), axis=0)
@@ -371,7 +371,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
             y_eval = np.concatenate(( y6_eval, y7_eval), axis=0)
 
     ## Exclude 6um from training and evaluation set
-    elif exclude == 6:
+    elif exclude_size == 6:
         if date == 0:
             x_train = np.concatenate((x45,x5, x7), axis=1)
             y_train = np.concatenate((y45,y5, y7), axis=0)
@@ -389,7 +389,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
             y_eval = np.concatenate((y5_eval, y7_eval), axis=0)
 
     ## Exclude 7um from training and evaluation set
-    elif exclude == 7:
+    elif exclude_size == 7:
         if date == 0:
             x_train = np.concatenate((x45,x5, x6), axis=1)
             y_train = np.concatenate((y45,y5, y6), axis=0)
@@ -429,24 +429,42 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
 #####################################################################################
 ##################### Preparing test data ###########################################
 #####################################################################################
-def prep_test_data_allfreq(data_folder_test):  # prepares the mixed beads data by putting frequencies next to each other
-    read_label = data_folder_test + "x1_data_mix.txt"
-    # read_label = data_folder_test + "x_data_45_1.txt"
-    # read_label = data_folder_test + "x_data_5.txt"
-    # read_label = data_folder_test + "x_data_6.txt"
-    # read_label = data_folder_test + "x_data_6_1.txt"
-    # read_label = data_folder_test + "x_data_6_2.txt"
-    # read_label = data_folder_test + "x_data_7.txt"
+def prep_test_data_allfreq(wdw, date_test, test_size):  # prepares the mixed beads data by putting frequencies next to each other
+
+    if date_test == 1106:
+        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
+    elif date_test == 1117:
+        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+    elif date_test == 1207:
+        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
+    elif date_test == 0:
+        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+
+    if test_size == 45:
+        read_label = data_folder_test + "x_data_45_1.txt"
+    elif test_size == 5:
+        read_label = data_folder_test + "x_data_5.txt"
+    elif test_size == 6:
+        read_label = data_folder_test + "x_data_6.txt"
+    elif test_size ==6_1:
+        read_label = data_folder_test + "x_data_6_1.txt"
+    elif test_size == 6_2:
+        read_label = data_folder_test + "x_data_6_2.txt"
+    elif test_size == 7:
+        read_label = data_folder_test + "x_data_7.txt"
+    elif test_size ==0:
+        read_label = data_folder_test + "x1_data_mix.txt"
 
     l, data = read_txt(read_label)
-    x_mix = np.transpose(data)
-    # x_mix = data
 
-    wdw =500
+    if date_test == 1106 and test_size == 6:
+        x_mix = data
+    else:
+        x_mix = np.transpose(data)
+
+
     SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
-    # print("l is " + str(l[1]))
     leng = int(len(x_mix[:, 1]) / 6)
-    # print(leng)
     xx_mix = np.zeros((6*SIZE, leng))
     a = 0
     for i in range(0, l[1], 6):
@@ -457,7 +475,6 @@ def prep_test_data_allfreq(data_folder_test):  # prepares the mixed beads data b
         # print("a is " + str(a))
         # print("i is " + str(i))
     x = np.transpose(xx_mix)
-    # x = xx_mix
     # print("x_mix shape" + str(x.shape))
 
     return x

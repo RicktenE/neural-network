@@ -31,7 +31,7 @@ import shap
 print(tf.__version__)
 
 # reload the data
-def test():
+def test(wdw,act_func,date,exclude_size,date_test,test_size):
     #data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
     load_train_label_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_labels_af6000.npy"
     load_train_data_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_data_af6000.npy"
@@ -45,12 +45,10 @@ def test():
     x_eval = np.load(load_eval_data_file)
     y_eval = np.load(load_eval_label_file)
     x_test = np.load(load_test_file)
-    # normalizer = preprocessing.Normalization(input_shape=[1,6000])
-    # normalizer.adapt(x_train)
-    # wdw =500 # for old data
-    wdw = 500
+
+
     SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
-    act_func = 'selu'
+
     # remake our model
     model = tf.keras.Sequential([
         preprocessing.Normalization(input_shape=[6*SIZE]),
@@ -225,7 +223,55 @@ def test():
     ###############################      plot            ################################
     #####################################################################################
     #####################################################################################
-    plt.suptitle(r"$\bf{Train}$: 4.5,5,(no 6),7 -- combined  " + r"$\bf{Test}$: mixed "r"$\mu$m -- 11-17""\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 100-25-10 ")
+    if date_test == 1106:
+        test_date = "11-06"
+    elif date_test == 1117:
+        test_date = "11-17"
+    elif date_test == 1207:
+        test_date = "12-07"
+    elif date_test == 0:
+        test_date = "combined"
+
+    if date == 1106:
+        train_date = "11-06"
+    elif date_test == 1117:
+        train_date = "11-17"
+    elif date_test == 1207:
+        train_date = "12-07"
+    elif date_test == 0:
+        train_date = "combined"
+
+    if test_size == 45:
+        size_test = "4.5"
+    elif test_size == 5:
+        size_test = "5"
+    elif test_size == 6:
+        size_test = "6"
+    elif test_size ==6_1:
+        size_test = "6 (set 1)"
+    elif test_size == 6_2:
+        size_test = "6 (set 2)"
+    elif test_size == 7:
+        size_test = "7"
+    elif test_size ==0:
+        size_test = "mixed"
+
+    if exclude_size == 45:
+        train_set = "(no 4.5),5,6,7"
+    elif exclude_size == 5:
+        train_set = "4.5,(no 5),6,7"
+    elif exclude_size == 6:
+        train_set = "4.5,5,(no 6),7"
+    elif exclude_size == 6_1:
+        train_set = "4.5,5,6(set2),7"
+    elif exclude_size == 6_2:
+        train_set = "4.5,5,6(set1),7"
+    elif exclude_size == 7:
+        train_set = "4.5,5,6,(no 7)"
+    elif exclude_size ==0:
+        train_set = "4.5,5,6,7"
+
+    plt.suptitle(r"$\bf{Train}$: "+ train_set +" --"+train_date +"" r"$\bf{Test}$: "+size_test+" "r"$\mu$m --" + test_date +"\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 100-25-10 ")
     #+ r"$\bf{ Diameter: }$ Exact"
 
 

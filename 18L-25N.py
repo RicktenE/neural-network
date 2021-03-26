@@ -55,29 +55,30 @@ print(x_train.shape)
 normalizer = preprocessing.Normalization()
 normalizer.adapt(x_train)  # adapts the normalization layer to the size of the training data
 
+act_func = 'selu'
 # Definition of the neural network
 model = tf.keras.Sequential([  # sequential= the layers in the network are arranged in the order we type them
     normalizer,
     tf.keras.layers.Dense(25,
-                          activation='selu'),
+                          activation= act_func),
     # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func ),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
+    tf.keras.layers.Dense(25, activation= act_func),
     # # tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])

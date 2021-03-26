@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import prep as dp
+# import prep as dp
 
 np.set_printoptions(precision=3, suppress=True)
 import tensorflow as tf
@@ -54,130 +54,102 @@ act_func = 'selu'
 # remake our model
 model = tf.keras.Sequential([
     preprocessing.Normalization(input_shape=[6*SIZE]),
-    tf.keras.layers.Dense(25,
-                          activation='selu'),
-    # Dense=fully connected layer. 25= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
-    tf.keras.layers.Dense(25, activation='selu'),
+    tf.keras.layers.Dense(100, activation=act_func),
+    tf.keras.layers.Dense(25, activation=act_func),
+    tf.keras.layers.Dense(10, activation=act_func),
     # # tf.keras.layers.Dropout(0.2),
-    # tf.keras.layers.Dense(100, activation='selu'),    # Dense=fully connected layer. 200= the number of neurons/nodes 'relu'=rectified linear unit activation function (standard activations)
-    # tf.keras.layers.Dense(100, activation='selu'),
-    # tf.keras.layers.Dense(50, activation='selu'),
-    # tf.keras.layers.Dense(50, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(25, activation='selu'),
-    # tf.keras.layers.Dense(10, activation='selu'),
-    # #tf.keras.layers.Dropout(0.2),
     layers.Dense(1, activation='linear')
 ])
 
-model.summary()
-model.compile(
-    optimizer=tf.optimizers.Adam(learning_rate=0.001),
-    loss='mean_absolute_error',
-    metrics=['accuracy'])
+# model.summary()
+# model.compile(
+#     optimizer=tf.optimizers.Adam(learning_rate=0.001),
+#     loss='mean_absolute_error',
+#     metrics=['accuracy'])
 
 # we load the weights here
 #model.load_weights("C:\\Users\\rtene\\PycharmProjects\\Neural_network\\model_weights_a6000_new.h5")
 model.load_weights("D:\\Saxion\\Jaar 4\\Bachelor Thesis\\neural network\\best_model_weights.h5")
 # we use the trained network with the command model.predict . The results are saved on the output.  Flatten is used
 # to create a single array at the end
-test_predictions = model.predict(x_eval).flatten()
-# test_predictions = model.predict(x_test).flatten()
-
-print(type(test_predictions))
+eval_predictions = model.predict(x_eval).flatten()
+# print(type(eval_predictions))
 # print(y_eval)
 
 # print("check 1")
 # # various plots are below
 # a1 = plt.axes(aspect='equal')
-# plt.scatter(y_eval, test_predictions)
-# plt.title("check 1 - x_eval")
-# plt.xlabel('True Values 'r'[$\mu$m]')
-# plt.ylabel('Predictions 'r'[$\mu$m]')
-# plt.show()
-
-# dswarm=pd.DataFrame(data=[y_eval,test_predictions])
-# ax=sns.swarmplot(data=dswarm)
-# print("check 2 ")
-# ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1)
-# plt.title("check 2 - x_eval")
+# plt.scatter(y_eval, eval_predictions)
+# plt.title("Network performance on evaluation data set")
 # plt.xlabel('True Values 'r'[$\mu$m]')
 # plt.ylabel('Predictions 'r'[$\mu$m]')
 # plt.show()
 #
-# print("check 3 ")
-# ax = sns.boxplot(x=y_eval, y=test_predictions, whis=np.inf)
-# ax = sns.swarmplot(x=y_eval, y=test_predictions, size=1.2, color=".2")
-# plt.title("check 3 - x_eval")
+# dswarm=pd.DataFrame(data=[y_eval,eval_predictions])
+# ax=sns.swarmplot(data=dswarm)
+# print("check 2 ")
+# ax = sns.swarmplot(x=y_eval, y=eval_predictions, size=1)
+# plt.title("Network performance on evaluation data set")
 # plt.xlabel('True Values 'r'[$\mu$m]')
 # plt.ylabel('Predictions 'r'[$\mu$m]')
 # plt.show()
-
+#
+# # print("check 3 ")
+# # ax = sns.boxplot(x=y_eval, y=eval_predictions, whis=np.inf)
+# # ax = sns.swarmplot(x=y_eval, y=eval_predictions, size=0.9, color=".2")
+# # plt.title("Network performance on evaluation data set")
+# # plt.xlabel('True Values 'r'[$\mu$m]')
+# # plt.ylabel('Predictions 'r'[$\mu$m]')
+# # plt.show()
+#
 # print("check 4 ")
-# ax = sns.violinplot(x=y_eval, y=test_predictions, inner=None)
-# ax = sns.swarmplot(x=y_eval, y=test_predictions, size=0.8, color="white", edgecolor="gray")
-# plt.title("check 4 - x_eval")
+# ax = sns.violinplot(x=y_eval, y=eval_predictions, inner=None)
+# ax = sns.swarmplot(x=y_eval, y=eval_predictions, size=1.1, color="white", edgecolor="gray")
+# plt.title("Network performance on evaluation data set")
 # plt.xlabel("True Values "r"[$\mu$m]")
 # plt.ylabel("Predictions "r"[$\mu$m]")
 # plt.show()
-
-
+#
+#
 # print("check 4.2 ")
-# ax=sns.violinplot(x=y_eval,y=test_predictions,inner=None)
-# ax=sns.stripplot(x=y_eval,y=test_predictions,size=1.2,color="white",edgecolor="gray")
-# plt.title("check 4.2 - x_eval")
+# ax=sns.violinplot(x=y_eval,y=eval_predictions,inner=None)
+# ax=sns.stripplot(x=y_eval,y=eval_predictions,size=1.1,color="white",edgecolor="gray")
+# plt.title("Network performance on evaluation data set")
 # plt.xlabel('True Values 'r'[$\mu$m]')
 # plt.ylabel('Predictions 'r'[$\mu$m]')
 # plt.show()
-
-# print(np.min(test_predictions))
-a = 1
-b = 1
-c = 1
-y5 = np.zeros((len(y_eval)))
-y6 = np.zeros((len(y_eval)))
-y7 = np.zeros((len(y_eval)))
-for i in range(len(y_eval)):
-    if y_eval[i] == 5:
-        y5[a] = test_predictions[i]
-        a += 1
-    elif y_eval[i] == 6:
-        y6[b] = test_predictions[i]
-        b += 1
-    elif y_eval[i] == 7:
-        y7[c] = test_predictions[i]
-        c += 1
-
-y5 = y5[y5 != 0]
-y7 = y7[y7 != 0]
-y6 = y6[y6 != 0]
-# print(y5)
-# print(y6)
-# print(y7)
+# #
+# # print(np.min(test_predictions))
+# a = 1
+# b = 1
+# c = 1
+# y5 = np.zeros((len(y_eval)))
+# y6 = np.zeros((len(y_eval)))
+# y7 = np.zeros((len(y_eval)))
+# for i in range(len(y_eval)):
+#     if y_eval[i] == 5:
+#         y5[a] = eval_predictions[i]
+#         a += 1
+#     elif y_eval[i] == 6:
+#         y6[b] = eval_predictions[i]
+#         b += 1
+#     elif y_eval[i] == 7:
+#         y7[c] = eval_predictions[i]
+#         c += 1
 #
+# y5 = y5[y5 != 0]
+# y7 = y7[y7 != 0]
+# y6 = y6[y6 != 0]
+# # print(y5)
+# # print(y6)
+# # print(y7)
+# #
 # print("check 5 ")
 # plt.figure(figsize=(8, 6))
 # plt.hist((y5), bins=np.linspace(4.5, 6, 50), log=False, alpha=0.9)
 # plt.hist((y6), bins=np.linspace(5, 7, 50), alpha=0.9)
 # plt.hist((y7), bins=np.linspace(6, 8.5, 50), alpha=0.9)
-# plt.title("check 5- x_eval data")
+# plt.title("Network performance on evaluation data set")
 # plt.xlabel("particle size "r"[$\mu$m]")
 # plt.ylabel("Count")
 # plt.show()
@@ -247,17 +219,18 @@ y6_mix = y6_mix[y6_mix != 0]
 y7_mix = y7_mix[y7_mix != 0]
 
 plt.figure(figsize=(8, 6))
-plt.hist((y45_mix), bins=np.linspace(4, 5, 60), alpha=0.9, label= '4.5 $\mu$m; s.dev:  ' + str(np.round(np.std(y45_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y45_mix),2)) + ' $ \mu$m; cnt: '+ str(y45_mix.shape[0]))
-plt.hist((y5_mix), bins=np.linspace(4.5, 6, 60), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
-plt.hist((y6_mix), bins=np.linspace(5, 7, 60),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
-plt.hist((y7_mix), bins=np.linspace(6, 8.5, 60), alpha=0.9, label= '7 $\mu$m;; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y7_mix),2)) + ' $ \mu$m; cnt: '+ str(y7_mix.shape[0]))
+plt.hist((y45_mix), bins=np.linspace(4, 5, 50), alpha=0.9, label= '4.5 $\mu$m; s.dev:  ' + str(np.round(np.std(y45_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y45_mix),2)) + ' $ \mu$m; cnt: '+ str(y45_mix.shape[0]))
+plt.hist((y5_mix), bins=np.linspace(4.5, 6, 50), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
+plt.hist((y6_mix), bins=np.linspace(5, 7, 50),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
+plt.hist((y7_mix), bins=np.linspace(6, 8.5, 50), alpha=0.9, label= '7 $\mu$m;; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y7_mix),2)) + ' $ \mu$m; cnt: '+ str(y7_mix.shape[0]))
 
 #####################################################################################
 #####################################################################################
 ###############################      plot            ################################
 #####################################################################################
 #####################################################################################
-plt.suptitle(r"$\bf{Train}$: 4.5,5,6(no 12-07),7 -- combined  " + r"$\bf{Test}$: 6 "r"$\mu$m -- 12-07""\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 25*18")
+plt.suptitle(r"$\bf{Train}$: 4.5,5,(no 6),7 -- combined  " + r"$\bf{Test}$: mixed "r"$\mu$m -- 11-17""\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 100-25-10 ")
+#+ r"$\bf{ Diameter: }$ Exact"
 
 
 plt.xlabel("particle size "r"[$\mu$m]")

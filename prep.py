@@ -21,21 +21,7 @@ def norm01(data):  # normalize data between 0 and 1
     res = (data - data.min()) / (data.max() - data.min())
     return res
 
-def show_train_history(history1):  # function for displaying the training results
-    plt.plot(history1.history['mae'], label='mae')
-    plt.plot(history1.history['mse'], label='mse')
-    plt.xlabel('Epoch')
-    plt.ylabel('Error')
-    plt.ylim([0.0, 1])
-    plt.legend(loc='lower right')
-    plt.show()
 
-    plt.plot(history1.history['loss'], label='loss')
-    plt.plot(history1.history['val_loss'], label='val_loss')
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss')
-    plt.legend(loc='lower right')
-    plt.show()
 
 
 #####################################################################################
@@ -48,7 +34,7 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
  ####Initiating the function with some variable choices.
     wdw = 500  # Window around the peak, has to be the same as chosen in the pre processing matlab file
     SIZE = wdw*2  # Define the window size around the peaks as chosen in matlab
-    corrected_values = True #To chose this option is to chose to train the network with the corrected diameter as measured in Douwe's experiment.
+    corrected_values = True  #To chose this option is to chose to train the network with the corrected diameter as measured in Douwe's experiment.
     exclude = 0  # Here you can choose which particles you want to exclude from the training set to check inter or extrapolation e.g. exclude = 5
     date = 0 #  Choose date = 0 for combined data otherwise enter date. e.g. 6 nov = 1106
  #####################################################################################
@@ -444,10 +430,10 @@ def make_training_set_allfreq_os(split_ratio):  # similar to training set but th
 ##################### Preparing test data ###########################################
 #####################################################################################
 def prep_test_data_allfreq(data_folder_test):  # prepares the mixed beads data by putting frequencies next to each other
-    # read_label = data_folder_test + "x1_data_mix.txt"
-    # read_label = data_folder_test + "x_data_45.txt"
+    read_label = data_folder_test + "x1_data_mix.txt"
+    # read_label = data_folder_test + "x_data_45_1.txt"
     # read_label = data_folder_test + "x_data_5.txt"
-    read_label = data_folder_test + "x_data_6.txt"
+    # read_label = data_folder_test + "x_data_6.txt"
     # read_label = data_folder_test + "x_data_6_1.txt"
     # read_label = data_folder_test + "x_data_6_2.txt"
     # read_label = data_folder_test + "x_data_7.txt"
@@ -479,8 +465,8 @@ def prep_test_data_allfreq(data_folder_test):  # prepares the mixed beads data b
 
 ####################Test data
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
-data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
+data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
 # data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
 
 ### Calling the test data

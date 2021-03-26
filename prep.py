@@ -30,20 +30,20 @@ def norm01(data):  # normalize data between 0 and 1
 #####################################################################################
 #####################################################################################
 def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ratio):  # similar to training set but this one puts all frequencies next to each other
-
- ####Initiating the function with some variable choices.
+    print("Preparing training and validation data ... ")
+    ####Initiating the function with some variable choices.
     # wdw = 500  # Window around the peak, has to be the same as chosen in the pre processing matlab file
     SIZE = wdw*2  # Define the window size around the peaks as chosen in matlab
     # corrected_values = True  #To chose this option is to chose to train the network with the corrected diameter as measured in Douwe's experiment.
     # exclude_size = 0  # Here you can choose which particles you want to exclude from the training set to check inter or extrapolation e.g. exclude = 5
     # date = 0 #  Choose date = 0 for combined data otherwise enter date. e.g. 6 nov = 1106
- #####################################################################################
- #####################################################################################
- #####################################################################################
- #####################################################################################
- #####################################################################################
+    #####################################################################################
+     #####################################################################################
+     #####################################################################################
+     #####################################################################################
+     #####################################################################################
 
-########################################################################
+    ########################################################################
     if date == 1106:
         data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
     elif date == 1117:
@@ -53,7 +53,7 @@ def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ra
     elif date == 0:
         data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
 
-########################################################################
+    ########################################################################
     #collecting data of 4.5 um beads
     if date == 0 or date == 1106:
         read_label = data_folder + "x_data_45.txt" # Name of the data for 4.5 micrometer beads
@@ -420,6 +420,20 @@ def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ra
     a, b = zip(*c)
     x_train = np.array(a)
     y_train = np.array(b)
+
+
+    save_train_label_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_labels_af6000.npy"
+    np.save(save_train_label_file, y_train)
+
+    save_train_data_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_data_af6000.npy"
+    np.save(save_train_data_file, x_train)
+
+    save_eval_label_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\eval_labels_af6000.npy"
+    np.save(save_eval_label_file, y_eval)
+
+    save_eval_data_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\eval_data_af6000.npy"
+    np.save(save_eval_data_file, x_eval)
+
     if split_ratio == 0:
         return x_train, y_train
     else:
@@ -430,7 +444,7 @@ def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ra
 ##################### Preparing test data ###########################################
 #####################################################################################
 def prep_test_data_allfreq(wdw, date_test, test_size):  # prepares the mixed beads data by putting frequencies next to each other
-
+    print("Preparing test data ... ")
     if date_test == 1106:
         data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
     elif date_test == 1117:
@@ -475,43 +489,20 @@ def prep_test_data_allfreq(wdw, date_test, test_size):  # prepares the mixed bea
         # print("a is " + str(a))
         # print("i is " + str(i))
     x = np.transpose(xx_mix)
-    # print("x_mix shape" + str(x.shape))
+
+    x_test = x
+    print("test data shape" + str(x_test.shape))
+    save_test_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\test_data_all_freq_6000.npy"
+    np.save(save_test_file, x_test)
+
 
     return x
 
 
-####################Test data
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
-data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
-# data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
-
-### Calling the test data
-x_test=prep_test_data_allfreq(data_folder_test)
-# x_test=prep_test_data(data_folder_test)
-print("test data shape" + str(x_test.shape))
-save_test_file="C:\\Users\\rtene\\PycharmProjects\\Neural_network\\test_data_all_freq_6000.npy"
-np.save(save_test_file,x_test)
-
-################## Train data
-x_train, y_train, x_eval, y_eval=make_training_set_allfreq_os(0.15)
 
 
-# #save_train_label_file="D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\train_labels_af6000.npy"
-save_train_label_file="C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_labels_af6000.npy"
-# save_train_label_file=""D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\11-17\\train_labels_af6000.npy"
-np.save(save_train_label_file,y_train)
-# #save_train_data_file="D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\train_data_af6000.npy"
-save_train_data_file="C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_data_af6000.npy"
-# save_train_data_file=""D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Processed_data\\with baseline\\11-17\\train_labels_af6000.npy"
-np.save(save_train_data_file,x_train)
-#
-#
-# #
-save_eval_label_file="C:\\Users\\rtene\\PycharmProjects\\Neural_network\\eval_labels_af6000.npy"
-np.save(save_eval_label_file,y_eval)
-save_eval_data_file="C:\\Users\\rtene\\PycharmProjects\\Neural_network\\eval_data_af6000.npy"
-np.save(save_eval_data_file,x_eval)
+
+
 #
 #
 # print(x_train.shape)

@@ -32,6 +32,7 @@ print(tf.__version__)
 
 # reload the data
 def test(wdw,act_func,date,exclude_size,date_test,test_size):
+    print("Running test file")
     #data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
     load_train_label_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_labels_af6000.npy"
     load_train_data_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_data_af6000.npy"
@@ -224,22 +225,22 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size):
     #####################################################################################
     #####################################################################################
     if date_test == 1106:
-        test_date = "11-06"
+        test_date = "11-06 "
     elif date_test == 1117:
-        test_date = "11-17"
+        test_date = "11-17 "
     elif date_test == 1207:
-        test_date = "12-07"
+        test_date = "12-07 "
     elif date_test == 0:
-        test_date = "combined"
+        test_date = "combined "
 
     if date == 1106:
-        train_date = "11-06"
+        train_date = "11-06 "
     elif date_test == 1117:
-        train_date = "11-17"
+        train_date = "11-17 "
     elif date_test == 1207:
-        train_date = "12-07"
+        train_date = "12-07 "
     elif date_test == 0:
-        train_date = "combined"
+        train_date = "combined "
 
     if test_size == 45:
         size_test = "4.5"

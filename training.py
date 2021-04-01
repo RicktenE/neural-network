@@ -37,7 +37,7 @@ def show_train_history(history1):  # function for displaying the training result
     plt.show()
 
 
-def train(wdw,act_func,learning_rate,patience,epochs):
+def train(wdw,act_func,learning_rate,patience,epochs,nodes):
     print("Running training file")
     import tensorflow as tf
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
@@ -77,17 +77,18 @@ def train(wdw,act_func,learning_rate,patience,epochs):
 
 
     # Definition of the neural network
-
+    cnt = 0
     # act_func = 'selu'
     # learning_rate = 0.001
     SIZE = wdw*2
     model = tf.keras.Sequential([  # sequential= the layers in the network are arranged in the order we type them
         normalizer,
-        tf.keras.layers.Dense(100, activation=act_func),
-        tf.keras.layers.Dense(25, activation=act_func),
-        tf.keras.layers.Dense(10, activation=act_func),
+        # tf.keras.layers.LSTM(10, activation = act_func),
+        # tf.keras.layers.Dense(nodes, activation=act_func),
+        # tf.keras.layers.Dense(nodes, activation=act_func),
+        # tf.keras.layers.Dense(nodes, activation=act_func),
         # # tf.keras.layers.Dropout(0.2),
-        layers.Dense(1, activation='linear')
+        layers.Dense(1, activation=act_func)
     ])
 
     model.summary()  # prints a summary of your model

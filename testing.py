@@ -31,7 +31,7 @@ import shap
 print(tf.__version__)
 
 # reload the data
-def test(wdw,act_func,date,exclude_size,date_test,test_size):
+def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes):
     print("Running test file")
     #data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
     load_train_label_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_labels_af6000.npy"
@@ -53,11 +53,12 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size):
     # remake our model
     model = tf.keras.Sequential([
         preprocessing.Normalization(input_shape=[6*SIZE]),
-        tf.keras.layers.Dense(100, activation=act_func),
-        tf.keras.layers.Dense(25, activation=act_func),
-        tf.keras.layers.Dense(10, activation=act_func),
+        # tf.keras.layers.LSTM(10, activation=act_func),
+        # tf.keras.layers.Dense(nodes, activation=act_func),
+        # tf.keras.layers.Dense(nodes, activation=act_func),
+        # tf.keras.layers.Dense(nodes, activation=act_func),
         # # tf.keras.layers.Dropout(0.2),
-        layers.Dense(1, activation='linear')
+        layers.Dense(1, activation=act_func)
     ])
 
     model.summary()
@@ -89,13 +90,13 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size):
     # plt.ylabel('Predictions 'r'[$\mu$m]')
     # plt.show()
     #
-    print("check 3 ")
-    ax = sns.boxplot(x=y_eval, y=eval_predictions, whis=np.inf)
-    ax = sns.swarmplot(x=y_eval, y=eval_predictions, size=0.9, color=".2")
-    plt.title("Network performance on evaluation data set")
-    plt.xlabel('True Values 'r'[$\mu$m]')
-    plt.ylabel('Predictions 'r'[$\mu$m]')
-    plt.show()
+    # print("check 3 ")
+    # ax = sns.boxplot(x=y_eval, y=eval_predictions, whis=np.inf)
+    # ax = sns.swarmplot(x=y_eval, y=eval_predictions, size=0.9, color=".2")
+    # plt.title("Network performance on evaluation data set")
+    # plt.xlabel('True Values 'r'[$\mu$m]')
+    # plt.ylabel('Predictions 'r'[$\mu$m]')
+    # plt.show()
     #
     # print("check 4 ")
     # ax = sns.violinplot(x=y_eval, y=eval_predictions, inner=None)
@@ -213,11 +214,17 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size):
     y6_mix = y6_mix[y6_mix != 0]
     y7_mix = y7_mix[y7_mix != 0]
 
-    plt.figure(figsize=(8, 6))
-    plt.hist((y45_mix), bins=np.linspace(4, 5, 50), alpha=0.9, label= '4.5 $\mu$m; s.dev:  ' + str(np.round(np.std(y45_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y45_mix),2)) + ' $ \mu$m; cnt: '+ str(y45_mix.shape[0]))
-    plt.hist((y5_mix), bins=np.linspace(4.5, 6, 50), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
-    plt.hist((y6_mix), bins=np.linspace(5, 7, 50),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
-    plt.hist((y7_mix), bins=np.linspace(6, 8.5, 50), alpha=0.9, label= '7 $\mu$m;; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y7_mix),2)) + ' $ \mu$m; cnt: '+ str(y7_mix.shape[0]))
+    if date_test == 1117 and test_size == 0:
+        plt.figure(figsize=(8, 6))
+        # plt.hist((y45_mix), bins=np.linspace(4, 5, 30), alpha=0.9, label= '4.5 $\mu$m; s.dev:  ' + str(np.round(np.std(y45_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y45_mix),2)) + ' $ \mu$m; cnt: '+ str(y45_mix.shape[0]))
+        plt.hist((y5_mix), bins=np.linspace(4.5, 6, 20), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
+        plt.hist((y6_mix), bins=np.linspace(5, 7, 20),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
+        plt.hist((y7_mix), bins=np.linspace(6, 8.5, 20), alpha=0.9, label= '7 $\mu$m;; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y7_mix),2)) + ' $ \mu$m; cnt: '+ str(y7_mix.shape[0]))
+    else:
+        plt.hist((y45_mix), bins=np.linspace(4, 5, 20), alpha=0.9, label= '4.5 $\mu$m; s.dev:  ' + str(np.round(np.std(y45_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y45_mix),2)) + ' $ \mu$m; cnt: '+ str(y45_mix.shape[0]))
+        plt.hist((y5_mix), bins=np.linspace(4.5, 6, 20), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
+        plt.hist((y6_mix), bins=np.linspace(5, 7, 20),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
+        plt.hist((y7_mix), bins=np.linspace(6, 8.5, 20), alpha=0.9, label= '7 $\mu$m;; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y7_mix),2)) + ' $ \mu$m; cnt: '+ str(y7_mix.shape[0]))
 
     #####################################################################################
     #####################################################################################
@@ -235,11 +242,11 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size):
 
     if date == 1106:
         train_date = "11-06 "
-    elif date_test == 1117:
+    elif date == 1117:
         train_date = "11-17 "
-    elif date_test == 1207:
+    elif date == 1207:
         train_date = "12-07 "
-    elif date_test == 0:
+    elif date == 0:
         train_date = "combined "
 
     if test_size == 45:
@@ -272,7 +279,7 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size):
     elif exclude_size ==0:
         train_set = "4.5,5,6,7"
 
-    plt.suptitle(r"$\bf{Train}$: "+ train_set +" --"+train_date +"" r"$\bf{Test}$: "+size_test+" "r"$\mu$m --" + test_date +"\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 100-25-10 ")
+    plt.suptitle(r"$\bf{Train}$: "+ train_set +" --"+train_date +"" r"$\bf{Test}$: "+size_test+" "r"$\mu$m --" + test_date +"\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 0*"+str(nodes))
     #+ r"$\bf{ Diameter: }$ Exact"
 
 
@@ -289,6 +296,9 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size):
     print("7um std: x_test: " + str(np.std(y7_mix)))
     #########################################################################################
     print("Count should be  " + str(test_predictions_mix.shape))
+
+    data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\"
+    np.savetxt(data_folder + 'predictions.txt', test_predictions_mix, delimiter='\t', newline='\n')
     # print("shape of predictions on x_eval  " + str(test_predictions.shape))
 
     # x_train=np.transpose(x_train)

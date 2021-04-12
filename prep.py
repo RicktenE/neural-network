@@ -29,7 +29,7 @@ def norm01(data):  # normalize data between 0 and 1
 #####################################################################################
 #####################################################################################
 #####################################################################################
-def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ratio):  # similar to training set but this one puts all frequencies next to each other
+def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ratio,frequency_count):  # similar to training set but this one puts all frequencies next to each other
     print("Preparing training and validation data ... ")
     ####Initiating the function with some variable choices.
     # wdw = 500  # Window around the peak, has to be the same as chosen in the pre processing matlab file
@@ -45,13 +45,13 @@ def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ra
 
     ########################################################################
     if date == 1106:
-        data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
+        data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\wdw_"+str(wdw)+"\\20201106\\"
     elif date == 1117:
-        data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+        data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\wdw_"+str(wdw)+"\\20201117\\"
     elif date == 1207:
-        data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
+        data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\wdw_"+str(wdw)+"\\20201207\\"
     elif date == 0:
-        data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+        data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\wdw_"+str(wdw)+"\\combined\\"
 
     ########################################################################
     #collecting data of 4.5 um beads
@@ -60,18 +60,24 @@ def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ra
         l, data = read_txt(read_label)
         # print(len(data))
         x45 = np.transpose(data)
-        # x45 = data
-        # print("shape x45 before concatenate" + str(x45.shape))
-        leng45 = int(len(x45[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
-        leng45 = leng45
-        # print("variable leng45: "+ str(leng45))
-        xx45 = np.zeros((6*SIZE, leng45))  # initialize an array of 6000 by the number of samples
-        a = 0
-        for i in range(0, l[1], 6):
-            xx45[:, a] = np.concatenate((x45[i, :SIZE], x45[i + 1, :SIZE], x45[i + 2, :SIZE], x45[i + 3, :SIZE],
-                                        x45[i + 4, :SIZE], x45[i + 5, :SIZE]),
-                                       axis=0)  # put the first 6 data from the txt next to each other
-            a += 1
+        if frequency_count == 6:
+            leng45 = int(len(x45[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
+            xx45 = np.zeros((6*SIZE, leng45))  # initialize an array of 6000 by the number of samples
+            a = 0
+            for i in range(0, l[1], 6):
+                xx45[:, a] = np.concatenate((x45[i, :SIZE], x45[i + 1, :SIZE], x45[i + 2, :SIZE], x45[i + 3, :SIZE],
+                                            x45[i + 4, :SIZE], x45[i + 5, :SIZE]),
+                                           axis=0)  # put the first 6 data from the txt next to each other
+                a += 1
+
+        elif frequency_count == 2:
+            leng45 = int(len(x45[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
+            xx45 = np.zeros((2*SIZE, leng45))  # initialize an array of 6000 by the number of samples
+            a = 0
+            for i in range(0, l[1], 6):
+                xx45[:, a] = np.concatenate((x45[i + 1, :SIZE], x45[i + 5, :SIZE]),
+                                           axis=0)  # put the first 6 data from the txt next to each other
+                a += 1
         x45 = xx45
         # print("shape x45 after concatenate: "+str(x45.shape))
         x45 = np.transpose(x45)
@@ -93,18 +99,26 @@ def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ra
         l, data = read_txt(read_label)
         # print(len(data))
         x5 = np.transpose(data)
-        # x5 = data
-        # print("shape x5 before concatenate" + str(x5.shape))
-        leng5 = int(len(x5[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
-        # leng5 = leng
-        # print("variable leng5: "+ str(leng5))
-        xx5 = np.zeros((6*SIZE, leng5))  # initialize an array of 6000 by the number of samples
-        a = 0
-        for i in range(0, l[1], 6):
-            xx5[:, a] = np.concatenate((x5[i, :SIZE], x5[i + 1, :SIZE], x5[i + 2, :SIZE], x5[i + 3, :SIZE],
-                                        x5[i + 4, :SIZE], x5[i + 5, :SIZE]),
-                                       axis=0)  # put the first 6 data from the txt next to each other
-            a += 1
+
+        if frequency_count==6:
+
+            leng5 = int(len(x5[:, SIZE]) / 6) # Size of the arrays depending on the window size chosen in matlab
+            xx5 = np.zeros((6*SIZE, leng5))  # initialize an array of 6000 by the number of samples
+            a = 0
+            for i in range(0, l[1], 6):
+                xx5[:, a] = np.concatenate((x5[i, :SIZE], x5[i + 1, :SIZE], x5[i + 2, :SIZE], x5[i + 3, :SIZE],
+                                            x5[i + 4, :SIZE], x5[i + 5, :SIZE]),
+                                           axis=0)  # put the first 6 data from the txt next to each other
+                a += 1
+
+        elif frequency_count == 2:
+            leng5 = int(len(x5[:, SIZE]) / 6)  # Size of the arrays depending on the window size chosen in matlab
+            xx5 = np.zeros((2 * SIZE, leng5))  # initialize an array of 6000 by the number of samples
+            a = 0
+            for i in range(0, l[1], 6):
+                xx5[:, a] = np.concatenate((x5[i + 1, :SIZE], x5[i + 5, :SIZE]),
+                                           axis=0)  # put the first 6 data from the txt next to each other
+                a += 1
         x5 = xx5
         # print("shape x5 after concatenate: "+str(x5.shape))
         x5 = np.transpose(x5)
@@ -126,19 +140,31 @@ def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ra
     if date != 123456789:
         read_label = data_folder + "x_data_6.txt"
         l, data = read_txt(read_label)
-        if date != 1106:
-            x6 = np.transpose(data)
-        else:
-            x6 = data
-        leng6 = int(len(x6[:, SIZE]) / 6)
-        # print(leng6)
-        xx6 = np.zeros((6*SIZE, leng6))
-        a = 0
-        for i in range(0, l[1], 6):
-           xx6[:, a] = np.concatenate((x6[i, :SIZE], x6[i + 1, :SIZE], x6[i + 2, :SIZE], x6[i + 3, :SIZE],
-                                        x6[i + 4, :SIZE], x6[i + 5, :SIZE]),
-                                       axis=0)
-           a += 1
+        # if date != 1106:
+        #     x6 = np.transpose(data)
+        # else:
+        #     x6 = data
+        x6 = np.transpose(data)
+        if frequency_count==6:
+
+            leng6 = int(len(x6[:, SIZE]) / 6)
+            # print(leng6)
+            xx6 = np.zeros((6*SIZE, leng6))
+            a = 0
+            for i in range(0, l[1], 6):
+               xx6[:, a] = np.concatenate((x6[i, :SIZE], x6[i + 1, :SIZE], x6[i + 2, :SIZE], x6[i + 3, :SIZE],
+                                            x6[i + 4, :SIZE], x6[i + 5, :SIZE]),
+                                           axis=0)
+               a += 1
+        elif frequency_count == 2:
+            leng6 = int(len(x6[:, SIZE]) / 6)
+            # print(leng6)
+            xx6 = np.zeros((2*SIZE, leng6))
+            a = 0
+            for i in range(0, l[1], 6):
+               xx6[:, a] = np.concatenate((x6[i + 1, :SIZE], x6[i + 5, :SIZE]),
+                                           axis=0)
+               a += 1
         x6 = xx6
         # print("shape x6 after concatenate: " + str(x6.shape))
         x6 = np.transpose(x6)
@@ -163,18 +189,27 @@ def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ra
         read_label = data_folder + "x_data_7.txt"
         l, data = read_txt(read_label)
         x7 = np.transpose(data)
-        # x7 = data
-        leng7 = int(len(x7[:, SIZE]) / 6)
-        # print(leng7)
-        xx7 = np.zeros((6*SIZE, leng7))
-        a = 0
-        for i in range(0, l[1], 6):
-            xx7[:, a] = np.concatenate((x7[i, :SIZE], x7[i + 1, :SIZE], x7[i + 2, :SIZE], x7[i + 3, :SIZE],
-                                        x7[i + 4, :SIZE], x7[i + 5, :SIZE]),
-                                       axis=0)
-            a += 1
+
+        if frequency_count == 6:
+            leng7 = int(len(x7[:, SIZE]) / 6)
+            xx7 = np.zeros((6*SIZE, leng7))
+            a = 0
+            for i in range(0, l[1], 6):
+                xx7[:, a] = np.concatenate((x7[i, :SIZE], x7[i + 1, :SIZE], x7[i + 2, :SIZE], x7[i + 3, :SIZE],
+                                            x7[i + 4, :SIZE], x7[i + 5, :SIZE]),
+                                           axis=0)
+                a += 1
+
+        elif frequency_count == 2:
+            leng7 = int(len(x7[:, SIZE]) / 6)
+            xx7 = np.zeros((2*SIZE, leng7))
+            a = 0
+            for i in range(0, l[1], 6):
+                xx7[:, a] = np.concatenate((x7[i + 1, :SIZE], x7[i + 5, :SIZE]),
+                                           axis=0)
+                a += 1
         x7 = xx7
-        # print("shape x7 after concatenate: "+str(x7.shape))
+        print("shape x7 after concatenate: "+str(x7.shape))
         x7 = np.transpose(x7)
 
         if corrected_values == True:
@@ -443,16 +478,16 @@ def make_training_set_allfreq_os(wdw,corrected_values,date,exclude_size,split_ra
 #####################################################################################
 ##################### Preparing test data ###########################################
 #####################################################################################
-def prep_test_data_allfreq(wdw, date_test, test_size):  # prepares the mixed beads data by putting frequencies next to each other
+def prep_test_data_allfreq(wdw, date_test, test_size,frequency_count):  # prepares the mixed beads data by putting frequencies next to each other
     print("Preparing test data ... ")
     if date_test == 1106:
-        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
+        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\wdw_"+str(wdw)+"\\20201106\\"
     elif date_test == 1117:
-        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\wdw_"+str(wdw)+"\\20201117\\"
     elif date_test == 1207:
-        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
+        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\wdw_"+str(wdw)+"\\20201207\\"
     elif date_test == 0:
-        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+        data_folder_test = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\wdw_"+str(wdw)+"\\combined\\"
 
     if test_size == 45:
         read_label = data_folder_test + "x_data_45_1.txt"
@@ -478,14 +513,24 @@ def prep_test_data_allfreq(wdw, date_test, test_size):  # prepares the mixed bea
 
 
     SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
-    leng = int(len(x_mix[:, 1]) / 6)
-    xx_mix = np.zeros((6*SIZE, leng))
-    a = 0
-    for i in range(0, l[1], 6):
-        xx_mix[:, a] = np.concatenate(
-            (x_mix[i, :SIZE], x_mix[i + 1, :SIZE], x_mix[i + 2, :SIZE], x_mix[i + 3, :SIZE], x_mix[i + 4, :SIZE], x_mix[i + 5, :SIZE]),
-            axis=0)
-        a += 1
+    if frequency_count ==6:
+        leng = int(len(x_mix[:, 1]) / 6)
+        xx_mix = np.zeros((6*SIZE, leng))
+        a = 0
+        for i in range(0, l[1], 6):
+            xx_mix[:, a] = np.concatenate(
+                (x_mix[i, :SIZE], x_mix[i + 1, :SIZE], x_mix[i + 2, :SIZE], x_mix[i + 3, :SIZE], x_mix[i + 4, :SIZE], x_mix[i + 5, :SIZE]),
+                axis=0)
+            a += 1
+    elif frequency_count == 2:
+        leng = int(len(x_mix[:, 1]) / 6)
+        xx_mix = np.zeros((2*SIZE, leng))
+        a = 0
+        for i in range(0, l[1], 6):
+            xx_mix[:, a] = np.concatenate(
+                (x_mix[i + 1, :SIZE], x_mix[i + 5, :SIZE]),
+                axis=0)
+            a += 1
         # print("a is " + str(a))
         # print("i is " + str(i))
     x = np.transpose(xx_mix)

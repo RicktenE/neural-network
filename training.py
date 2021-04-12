@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import time
+from win32com.client import Dispatch
 import pandas as pd
 import seaborn as sns
 # import prep as dp
@@ -64,6 +66,7 @@ def train(wdw,act_func,learning_rate,patience,epochs,nodes):
     print(x_eval.shape)
     print(x_train.shape)
 
+    start = time.time() # to check total time for running training.py
     # dx_train=pd.DataFrame(data=x_train)
     # dx_eval=pd.DataFrame(data=x_eval)
     # dy_train=pd.DataFrame(data=y_train)
@@ -84,7 +87,7 @@ def train(wdw,act_func,learning_rate,patience,epochs,nodes):
     model = tf.keras.Sequential([  # sequential= the layers in the network are arranged in the order we type them
         normalizer,
         # tf.keras.layers.LSTM(10, activation = act_func),
-        # tf.keras.layers.Dense(nodes, activation=act_func),
+        tf.keras.layers.Dense(nodes, activation=act_func),
         # tf.keras.layers.Dense(nodes, activation=act_func),
         # tf.keras.layers.Dense(nodes, activation=act_func),
         # # tf.keras.layers.Dropout(0.2),
@@ -121,7 +124,7 @@ def train(wdw,act_func,learning_rate,patience,epochs,nodes):
     #                      callbacks= [tensorboard_callback,es,sm]
     #                      )
 
-    show_train_history(history1)  # the function we made in data_prep
+    # show_train_history(history1)
 
     # res=model.predict(x_eval)
     # print(res)
@@ -131,7 +134,8 @@ def train(wdw,act_func,learning_rate,patience,epochs,nodes):
     model.save_weights("C:\\Users\\rtene\\PycharmProjects\\Neural_network\\model_weights_a6000_new.h5") #saves the model weights
 
     model.evaluate(x_eval, y_eval)  # evaluate the model with ur validation data
-
+    end = time.time()
+    print("Time to finish training.py " +str(end-start))
     # test_predictions = model.predict(x_eval)
     #
     # a = plt.axes(aspect='equal')
@@ -140,6 +144,9 @@ def train(wdw,act_func,learning_rate,patience,epochs,nodes):
     # plt.ylabel('Predictions [um]')
     # plt.show()
 
-    #%tensorboard --logdir logs/fit
+    # #%tensorboard --logdir logs/fit
+    # speak = Dispatch("SAPI.SpVoice").Speak
+    #
+    # speak("Ready with Training")
 
 # train()

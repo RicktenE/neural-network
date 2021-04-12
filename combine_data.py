@@ -1,4 +1,7 @@
 import numpy as np
+import time
+from win32com.client import Dispatch
+start = time.time()
 
 def read_txt(filepath):  # reads a txt file line by line and returns the data in an array and the length of the array
     a = np.loadtxt(filepath)
@@ -51,7 +54,7 @@ print('shape x_6_2', str(x_6_2.shape))
 
 x_6 = np.transpose(x_6)# to keep all data in the same shape as the non combined data
 print('shape x_6 combined 11-06', str(x_6.shape))
-np.savetxt( data_folder + 'x_data_6 .txt', x_6, delimiter='\t', newline='\n')
+np.savetxt( data_folder + 'x_data_6.txt', x_6, delimiter='\t', newline='\n')
 
 ########################################################################
 ########### Here mixed 1 and mixed 2 from 11-06 are combined into x_data_mix.txt
@@ -148,23 +151,23 @@ np.savetxt(data_folder + 'x_data_5.txt', x_5, delimiter='\t', newline='\n')
 data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
 read_label = data_folder + "x_data_6.txt"
 l, data = read_txt(read_label)
-# x_6_1 = np.transpose(data)
-x_6_1 = np.array(data)
-# print('shape x_6_1 combined 11-06 read out', str(x_6_1.shape))
+x_6_1 = np.transpose(data)
+# x_6_1 = np.array(data)
+print('shape x_6_1 combined 11-06 read out', str(x_6_1.shape))
 
 data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
 read_label = data_folder + "x_data_6.txt"
 l, data = read_txt(read_label)
 x_6_2 = np.transpose(data)
 # x_6_2 = np.array(data)
-# print('shape x_6_2 combined 11-17 read out', str(x_6_2.shape))
+print('shape x_6_2 combined 11-17 read out', str(x_6_2.shape))
 
 data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
 read_label = data_folder + "x_data_6.txt"
 l, data = read_txt(read_label)
 x_6_3 = np.transpose(data)
 # x_6_3 = np.array(data)
-# print('shape x_6_3 combined 12-07 read out', str(x_6_3.shape))
+print('shape x_6_3 combined 12-07 read out', str(x_6_3.shape))
 
 x_6 = np.concatenate((x_6_1, x_6_2, x_6_3), axis=0)
 
@@ -265,123 +268,136 @@ data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
 np.savetxt(data_folder + 'x1_data_mix.txt', x_mix, delimiter='\t', newline='\n')
 
 
+##########################################################################################################
+##########################################################################################################
+##########################################################################################################
 
 
 #####################################################################################
 ####### Creating the corrected diameter combined validation data#####################
 #####################################################################################
 
-###########Here the D45_cor_date.txt files from all dates are combined into D45_cor_combined.txt
+# ###########Here the D45_cor_date.txt files from all dates are combined into D45_cor_combined.txt
+#
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
+# read_label = data_folder + "D45_cor_11-06.txt"
+# l, data = read_txt(read_label)
+# x_45 = np.transpose(data)
+# # x_45 = np.array(data)
+#
+# print('shape D45 11-06', str(x_45.shape))
+#
+# x_45 = np.transpose(x_45)# to keep all data in the same shape as the non combined data
+# print('shape D45_cor_combined combined ', str(x_45.shape))
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+# np.savetxt(data_folder + 'D45_cor_combined.txt', x_45, delimiter='\t', newline='\n')
+#
+# ########################################################################
+# ###########Creating the combined data files where all dates are included
+# ###########Here the D5_cor_date.txt files from all dates are combined into D5_cor_combined.txt
+# ###########11-06 has no 5 um data
+#
+#
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+# read_label = data_folder + "D5_cor_11-17.txt"
+# l, data = read_txt(read_label)
+# x_5_2 = np.transpose(data)
+# # x_5_2 = np.array(data)
+#
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
+# read_label = data_folder + "D5_cor_12-07.txt"
+# l, data = read_txt(read_label)
+# x_5_3 = np.transpose(data)
+# # x_5_3 = np.array(data)
+# x_5 = np.concatenate((x_5_2, x_5_3), axis=0)
+#
+# # printing the shapes to check if everything goes well
+# print('shape D5 11-17', str(x_5_2.shape))
+# print('shape D5 12-07', str(x_5_3.shape))
+#
+# x_5 = np.transpose(x_5)# to keep all data in the same shape as the non combined data
+# print('shape D5_cor_combined combined all dates', str(x_5.shape))
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+# np.savetxt(data_folder + 'D5_cor_combined.txt', x_5, delimiter='\t', newline='\n')
+#
+# ########################################################################
+# ########### Here the D6_cor_date.txt files from all dates are combined into D6_cor_combined.txt
+# ########### All 3 dates have 6um beads
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
+# read_label = data_folder + "D6_cor_11-06.txt"
+# l, data = read_txt(read_label)
+# # x_6_1 = np.transpose(data)
+# x_6_1 = np.array(data)
+# # print('shape x_6_1 combined 11-06 read out', str(x_6_1.shape))
+#
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+# read_label = data_folder + "D6_cor_11-17.txt"
+# l, data = read_txt(read_label)
+# x_6_2 = np.transpose(data)
+# # x_6_2 = np.array(data)
+# # print('shape x_6_2 combined 11-17 read out', str(x_6_2.shape))
+#
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
+# read_label = data_folder + "D6_cor_12-07.txt"
+# l, data = read_txt(read_label)
+# x_6_3 = np.transpose(data)
+# # x_6_3 = np.array(data)
+# # print('shape x_6_3 combined 12-07 read out', str(x_6_3.shape))
+#
+# x_6 = np.concatenate((x_6_1, x_6_2, x_6_3), axis=0)
+#
+# # # # To test if the netwerk recognizes 6 from a different date; where 11-06 has a different flowrate
+# # x_6 = np.concatenate((x_6_2, x_6_3), axis=0)
+#
+# # To test if the netwerk recognizes 6 from a different date; now all flowrates are included in the training set
+# # x_6 = np.concatenate((x_6_1, x_6_3), axis=0)
+#
+# # printing the shapes to check if everything goes well
+# print('shape D6 11-06 ', str(x_6_1.shape))
+# print('shape D6 11-17', str(x_6_2.shape))
+# print('shape D6 12-07', str(x_6_3.shape))
+#
+#
+# x_6 = np.transpose(x_6)# to keep all data in the same shape as the non combined data
+# print('shape D6_cor_combined combined all dates', str(x_6.shape))
+#
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+# np.savetxt(data_folder + 'D6_cor_combined.txt', x_6, delimiter='\t', newline='\n')
+#
+#
+# ########################################################################
+# ########### Here the D7_cor_date.txt files from all dates are combined into D7_cor_combined.txt
+# # ##########11-06 has no 7 um data
+#
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
+# read_label = data_folder + "D7_cor_11-17.txt"
+# l, data = read_txt(read_label)
+# x_7_2 = np.transpose(data)
+# # x_7_2 = np.array(data)
+#
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
+# read_label = data_folder + "D7_cor_12-07.txt"
+# l, data = read_txt(read_label)
+# x_7_3 = np.transpose(data)
+# # x_7_3 = np.array(data)
+# x_7 = np.concatenate((x_7_2, x_7_3), axis=0)
+#
+# # printing the shapes to check if everything goes well
+# print('shape D7 11-17', str(x_7_2.shape))
+# print('shape D7 12-07', str(x_7_3.shape))
+#
+#
+# x_7 = np.transpose(x_7) # to keep all data in the same shape as the non combined data
+# print('shape D7_cor_combined.txt combined all dates', str(x_7.shape))
+# data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
+# np.savetxt(data_folder + 'D7_cor_combined.txt', x_7, delimiter='\t', newline='\n')
+##########################################################################################################
+##########################################################################################################
+##########################################################################################################
 
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
-read_label = data_folder + "D45_cor_11-06.txt"
-l, data = read_txt(read_label)
-x_45 = np.transpose(data)
-# x_45 = np.array(data)
+end = time.time()
+print("total time to combine data: " + str(round(end-start,2)))
 
-print('shape D45 11-06', str(x_45.shape))
+speak = Dispatch("SAPI.SpVoice").Speak
 
-x_45 = np.transpose(x_45)# to keep all data in the same shape as the non combined data
-print('shape D45_cor_combined combined ', str(x_45.shape))
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
-np.savetxt(data_folder + 'D45_cor_combined.txt', x_45, delimiter='\t', newline='\n')
-
-########################################################################
-###########Creating the combined data files where all dates are included
-###########Here the D5_cor_date.txt files from all dates are combined into D5_cor_combined.txt
-###########11-06 has no 5 um data
-
-
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
-read_label = data_folder + "D5_cor_11-17.txt"
-l, data = read_txt(read_label)
-x_5_2 = np.transpose(data)
-# x_5_2 = np.array(data)
-
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
-read_label = data_folder + "D5_cor_12-07.txt"
-l, data = read_txt(read_label)
-x_5_3 = np.transpose(data)
-# x_5_3 = np.array(data)
-x_5 = np.concatenate((x_5_2, x_5_3), axis=0)
-
-# printing the shapes to check if everything goes well
-print('shape D5 11-17', str(x_5_2.shape))
-print('shape D5 12-07', str(x_5_3.shape))
-
-x_5 = np.transpose(x_5)# to keep all data in the same shape as the non combined data
-print('shape D5_cor_combined combined all dates', str(x_5.shape))
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
-np.savetxt(data_folder + 'D5_cor_combined.txt', x_5, delimiter='\t', newline='\n')
-
-########################################################################
-########### Here the D6_cor_date.txt files from all dates are combined into D6_cor_combined.txt
-########### All 3 dates have 6um beads
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201106\\"
-read_label = data_folder + "D6_cor_11-06.txt"
-l, data = read_txt(read_label)
-# x_6_1 = np.transpose(data)
-x_6_1 = np.array(data)
-# print('shape x_6_1 combined 11-06 read out', str(x_6_1.shape))
-
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
-read_label = data_folder + "D6_cor_11-17.txt"
-l, data = read_txt(read_label)
-x_6_2 = np.transpose(data)
-# x_6_2 = np.array(data)
-# print('shape x_6_2 combined 11-17 read out', str(x_6_2.shape))
-
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
-read_label = data_folder + "D6_cor_12-07.txt"
-l, data = read_txt(read_label)
-x_6_3 = np.transpose(data)
-# x_6_3 = np.array(data)
-# print('shape x_6_3 combined 12-07 read out', str(x_6_3.shape))
-
-x_6 = np.concatenate((x_6_1, x_6_2, x_6_3), axis=0)
-
-# # # To test if the netwerk recognizes 6 from a different date; where 11-06 has a different flowrate
-# x_6 = np.concatenate((x_6_2, x_6_3), axis=0)
-
-# To test if the netwerk recognizes 6 from a different date; now all flowrates are included in the training set
-# x_6 = np.concatenate((x_6_1, x_6_3), axis=0)
-
-# printing the shapes to check if everything goes well
-print('shape D6 11-06 ', str(x_6_1.shape))
-print('shape D6 11-17', str(x_6_2.shape))
-print('shape D6 12-07', str(x_6_3.shape))
-
-
-x_6 = np.transpose(x_6)# to keep all data in the same shape as the non combined data
-print('shape D6_cor_combined combined all dates', str(x_6.shape))
-
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
-np.savetxt(data_folder + 'D6_cor_combined.txt', x_6, delimiter='\t', newline='\n')
-
-
-########################################################################
-########### Here the D7_cor_date.txt files from all dates are combined into D7_cor_combined.txt
-# ##########11-06 has no 7 um data
-
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201117\\"
-read_label = data_folder + "D7_cor_11-17.txt"
-l, data = read_txt(read_label)
-x_7_2 = np.transpose(data)
-# x_7_2 = np.array(data)
-
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\20201207\\"
-read_label = data_folder + "D7_cor_12-07.txt"
-l, data = read_txt(read_label)
-x_7_3 = np.transpose(data)
-# x_7_3 = np.array(data)
-x_7 = np.concatenate((x_7_2, x_7_3), axis=0)
-
-# printing the shapes to check if everything goes well
-print('shape D7 11-17', str(x_7_2.shape))
-print('shape D7 12-07', str(x_7_3.shape))
-
-
-x_7 = np.transpose(x_7) # to keep all data in the same shape as the non combined data
-print('shape D7_cor_combined.txt combined all dates', str(x_7.shape))
-data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\combined\\"
-np.savetxt(data_folder + 'D7_cor_combined.txt', x_7, delimiter='\t', newline='\n')
+speak("Finished combining data")

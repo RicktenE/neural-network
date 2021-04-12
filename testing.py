@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 # import prep as dp
-
+from win32com.client import Dispatch
 np.set_printoptions(precision=3, suppress=True)
 import tensorflow as tf
 import time
@@ -31,7 +31,7 @@ import shap
 print(tf.__version__)
 
 # reload the data
-def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes):
+def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes,frequency_count):
     print("Running test file")
     #data_folder = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\"
     load_train_label_file = "C:\\Users\\rtene\\PycharmProjects\\Neural_network\\train_labels_af6000.npy"
@@ -47,17 +47,17 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes):
     y_eval = np.load(load_eval_label_file)
     x_test = np.load(load_test_file)
 
+    start = time.time()  # to check total time for running testing.py
 
     SIZE = wdw * 2  # Define the window size around the peaks as chosen in matlab
 
     # remake our model
     model = tf.keras.Sequential([
-        preprocessing.Normalization(input_shape=[6*SIZE]),
+        preprocessing.Normalization(input_shape=[frequency_count*SIZE]),
         # tf.keras.layers.LSTM(10, activation=act_func),
+        tf.keras.layers.Dense(nodes, activation=act_func),
         # tf.keras.layers.Dense(nodes, activation=act_func),
-        # tf.keras.layers.Dense(nodes, activation=act_func),
-        # tf.keras.layers.Dense(nodes, activation=act_func),
-        # # tf.keras.layers.Dropout(0.2),
+        # tf.keras.layers.Dense(nodes, activation=act_func),# # tf.keras.layers.Dropout(0.2),
         layers.Dense(1, activation=act_func)
     ])
 
@@ -165,16 +165,16 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes):
     #     plt.plot(x_eval[i,:])
     #     plt.plot(x_test[770+i,:])
     #     plt.show()
-    print("check 6")
-    start = time.time()
+    # print("check 6")
+    # start = time.time()
     test_predictions_mix = model.predict(x_test).flatten()
     # print(test_predictions1.shape)
-    end = time.time()
+    # end = time.time()
     # print("Counted at check 6 x_test --" + str(x_test.shape[0]) + " particles in :" + str(end - start) + "sec")
 
     cnt = 0
     for i in range(len(test_predictions_mix)):
-        if test_predictions_mix[i] >= 15:
+        if test_predictions_mix[i] >= 7.5:
             test_predictions_mix[i] = 7
             cnt = cnt+1
             print("corrected " + str(cnt)+" value(s)")
@@ -195,32 +195,57 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes):
     y5_mix = np.zeros((len(test_predictions_mix)))
     y6_mix = np.zeros((len(test_predictions_mix)))
     y7_mix = np.zeros((len(test_predictions_mix)))
-    for i in range(len(test_predictions_mix)):
-        if test_predictions_mix[i] <= 4.60:
-            y45_mix[k] = test_predictions_mix[i]
-            k += 1
-        elif test_predictions_mix[i] > 4.60 and test_predictions_mix[i] <= 5.5:
-            y5_mix[d] = test_predictions_mix[i]
-            d += 1
-        elif test_predictions_mix[i] > 5.5 and test_predictions_mix[i] <= 6.5:
-            y6_mix[e] = test_predictions_mix[i]
-            e += 1
-        elif test_predictions_mix[i] >= 6.5:
-            y7_mix[f] = test_predictions_mix[i]
-            f += 1
-
-    y45_mix = y45_mix[y45_mix != 0]
-    y5_mix = y5_mix[y5_mix != 0]
-    y6_mix = y6_mix[y6_mix != 0]
-    y7_mix = y7_mix[y7_mix != 0]
 
     if date_test == 1117 and test_size == 0:
+        for i in range(len(test_predictions_mix)):
+            if test_predictions_mix[i] <= 5.5:
+                y5_mix[d] = test_predictions_mix[i]
+                d += 1
+            elif test_predictions_mix[i] > 5.5 and test_predictions_mix[i] <= 6.5:
+                y6_mix[e] = test_predictions_mix[i]
+                e += 1
+            elif test_predictions_mix[i] >= 6.5:
+                y7_mix[f] = test_predictions_mix[i]
+                f += 1
+
+        y5_mix = y5_mix[y5_mix != 0]
+        y6_mix = y6_mix[y6_mix != 0]
+        y7_mix = y7_mix[y7_mix != 0]
+
         plt.figure(figsize=(8, 6))
-        # plt.hist((y45_mix), bins=np.linspace(4, 5, 30), alpha=0.9, label= '4.5 $\mu$m; s.dev:  ' + str(np.round(np.std(y45_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y45_mix),2)) + ' $ \mu$m; cnt: '+ str(y45_mix.shape[0]))
         plt.hist((y5_mix), bins=np.linspace(4.5, 6, 20), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
         plt.hist((y6_mix), bins=np.linspace(5, 7, 20),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
         plt.hist((y7_mix), bins=np.linspace(6, 8.5, 20), alpha=0.9, label= '7 $\mu$m;; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y7_mix),2)) + ' $ \mu$m; cnt: '+ str(y7_mix.shape[0]))
+    elif test_size == 6:
+        for i in range(len(test_predictions_mix)):
+            y6_mix[e] = test_predictions_mix[i]
+            e += 1
+
+        y6_mix = y6_mix[y6_mix != 0]
+
+        plt.figure(figsize=(8, 6))
+        plt.hist((y6_mix), bins=np.linspace(4.5, 9, 20), alpha=0.9, label='6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix), 2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix), 2)) + ' $ \mu$m; cnt: ' + str(y6_mix.shape[0]))
     else:
+        for i in range(len(test_predictions_mix)):
+            if test_predictions_mix[i] <= 4.60:
+                y45_mix[k] = test_predictions_mix[i]
+                k += 1
+            elif test_predictions_mix[i] > 4.60 and test_predictions_mix[i] <= 5.5:
+                y5_mix[d] = test_predictions_mix[i]
+                d += 1
+            elif test_predictions_mix[i] > 5.5 and test_predictions_mix[i] <= 6.5:
+                y6_mix[e] = test_predictions_mix[i]
+                e += 1
+            elif test_predictions_mix[i] >= 6.5:
+                y7_mix[f] = test_predictions_mix[i]
+                f += 1
+
+        y45_mix = y45_mix[y45_mix != 0]
+        y5_mix = y5_mix[y5_mix != 0]
+        y6_mix = y6_mix[y6_mix != 0]
+        y7_mix = y7_mix[y7_mix != 0]
+
+        plt.figure(figsize=(8, 6))
         plt.hist((y45_mix), bins=np.linspace(4, 5, 20), alpha=0.9, label= '4.5 $\mu$m; s.dev:  ' + str(np.round(np.std(y45_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y45_mix),2)) + ' $ \mu$m; cnt: '+ str(y45_mix.shape[0]))
         plt.hist((y5_mix), bins=np.linspace(4.5, 6, 20), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
         plt.hist((y6_mix), bins=np.linspace(5, 7, 20),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
@@ -279,7 +304,7 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes):
     elif exclude_size ==0:
         train_set = "4.5,5,6,7"
 
-    plt.suptitle(r"$\bf{Train}$: "+ train_set +" --"+train_date +"" r"$\bf{Test}$: "+size_test+" "r"$\mu$m --" + test_date +"\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 0*"+str(nodes))
+    plt.suptitle(r"$\bf{Train}$: "+ train_set +" --"+train_date +"" r"$\bf{Test}$: "+size_test+" "r"$\mu$m --" + test_date +"\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 1*"+str(nodes) + r" $\bf{ Window}:$ "+str(wdw))
     #+ r"$\bf{ Diameter: }$ Exact"
 
 
@@ -299,6 +324,9 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes):
 
     data_folder = "D:\\Saxion\\Jaar 4\\Bachelor Thesis\\Data Rick\\"
     np.savetxt(data_folder + 'predictions.txt', test_predictions_mix, delimiter='\t', newline='\n')
+    end = time.time()
+    print("Time to finish testing.py " +str(end-start))
+
     # print("shape of predictions on x_eval  " + str(test_predictions.shape))
 
     # x_train=np.transpose(x_train)
@@ -365,6 +393,10 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes):
     # explainer = shap.KernelExplainer(f, dx_train.iloc[:50,:])
     # shap_values = explainer.shap_values(x_train[299,:], nsamples=500)
     # shap.force_plot(explainer.expected_value, shap_values, x_train[299,:])
+
+    # speak = Dispatch("SAPI.SpVoice").Speak
+    #
+    # speak("Testing Finished")
 
 
 

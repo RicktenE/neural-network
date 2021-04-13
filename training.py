@@ -45,11 +45,11 @@ def train(wdw,act_func,learning_rate,patience,epochs,nodes):
     print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
     print(tf.__version__)
 
-    # uncomment this if you want to seed the random generator
+    # # uncomment this if you want to seed the random generator
     from numpy.random import seed #
-    seed(11)# keras seed fixing
+    seed(6)# keras seed fixing
     import tensorflow as tf
-    tf.random.set_seed(11)# tensorflow seed fixing
+    tf.random.set_seed(6)# tensorflow seed fixing
     print(tf.version.VERSION)
 
 

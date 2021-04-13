@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.mlab as mlab
+from scipy.stats import norm
 import pandas as pd
 import seaborn as sns
 # import prep as dp
@@ -174,8 +176,8 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes,frequency_coun
 
     cnt = 0
     for i in range(len(test_predictions_mix)):
-        if test_predictions_mix[i] >= 7.5:
-            test_predictions_mix[i] = 7
+        if test_predictions_mix[i] >= 8:
+            test_predictions_mix[i] = 0
             cnt = cnt+1
             print("corrected " + str(cnt)+" value(s)")
 
@@ -196,7 +198,7 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes,frequency_coun
     y6_mix = np.zeros((len(test_predictions_mix)))
     y7_mix = np.zeros((len(test_predictions_mix)))
 
-    if date_test == 1117 and test_size == 0:
+    if date_test == 1117 and test_size == 0 or date_test == 1207 and test_size == 0:
         for i in range(len(test_predictions_mix)):
             if test_predictions_mix[i] <= 5.5:
                 y5_mix[d] = test_predictions_mix[i]
@@ -212,10 +214,43 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes,frequency_coun
         y6_mix = y6_mix[y6_mix != 0]
         y7_mix = y7_mix[y7_mix != 0]
 
-        plt.figure(figsize=(8, 6))
-        plt.hist((y5_mix), bins=np.linspace(4.5, 6, 20), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
-        plt.hist((y6_mix), bins=np.linspace(5, 7, 20),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
-        plt.hist((y7_mix), bins=np.linspace(6, 8.5, 20), alpha=0.9, label= '7 $\mu$m;; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y7_mix),2)) + ' $ \mu$m; cnt: '+ str(y7_mix.shape[0]))
+        plt.figure(figsize=(8, 8))
+
+        #best fit the data
+        (mu1, sigma1) = norm.fit(y5_mix)
+        (mu2, sigma2) = norm.fit(y6_mix)
+        (mu3, sigma3) = norm.fit(y7_mix)
+        # print("Mu 5: " + str(mu1))
+        # print("Mu 6: " + str(mu2))
+        # print("Mu 7: " + str(mu3))
+        # print("sigma 5 " + str(sigma1))
+        # print("sigma 6 " + str(sigma2))
+        # print("sigma 7 " + str(sigma3))
+        # the histogram of the data
+        # n1, bins1, patches1 = plt.hist((y5_mix), bins=np.linspace(4.5, 6, 300), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
+        # n2, bins2, patches2 = plt.hist((y6_mix), bins=np.linspace(5, 7, 300),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
+        # n3, bins3, patches3 = plt.hist((y7_mix), bins=np.linspace(6, 8.5, 300), alpha=0.9, label= '7 $\mu$m;; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y7_mix),2)) + ' $ \mu$m; cnt: '+ str(y7_mix.shape[0]))
+        plt.hist(y5_mix, bins=np.linspace(4.5, 6, 30),density =True, alpha=0.9,
+                                       label=''r'$\bar \mu$: ' + str(
+                                           np.round(mu1, 2)) + ' [$\mu$m] $\sigma$:  ' + str(
+                                           np.round(sigma1, 2)) + ' [$\mu$m] cnt: ' + str(y5_mix.shape[0]))
+        plt.hist(y6_mix, bins=np.linspace(5, 7, 30), density=True, alpha=0.9,
+                                       label=''r'$\bar \mu$: ' + str(
+                                            np.round(mu2, 2)) + ' [$\mu$m]  $\sigma$:  ' + str(
+                                            np.round(sigma2, 2)) + ' [$\mu$m] cnt: ' + str(y6_mix.shape[0]))
+        plt.hist(y7_mix, bins=np.linspace(6, 8.5, 30),density =True, alpha=0.9,
+                                       label=''r'$\bar \mu$: ' + str(
+                                           np.round(mu3, 2)) + ' [$\mu$m]  $\sigma$:  ' + str(
+                                           np.round(sigma3, 2)) + ' [$\mu$m] cnt: ' + str(y7_mix.shape[0]))
+
+        fit1 = norm.pdf(np.linspace(4.5,6,30),mu1,sigma1)
+        fit2 = norm.pdf(np.linspace(5,7,30),mu2,sigma2)
+        fit3 = norm.pdf(np.linspace(6,8,30),mu3,sigma3)
+        plt.plot(np.linspace(4.5,6,30), fit1,'k--', linewidth=2)
+        plt.plot(np.linspace(5,7,30), fit2, 'k--', linewidth=2)
+        plt.plot(np.linspace(6,8,30), fit3, 'k--', linewidth=2)
+        plt.grid(True)
+
     elif test_size == 6:
         for i in range(len(test_predictions_mix)):
             y6_mix[e] = test_predictions_mix[i]
@@ -223,8 +258,15 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes,frequency_coun
 
         y6_mix = y6_mix[y6_mix != 0]
 
+        plt.figure(figsize=(8, 8))
+        (mu2, sigma2) = norm.fit(y6_mix)
+        fit2 = norm.pdf(np.linspace(5,7,30),mu2,sigma2)
         plt.figure(figsize=(8, 6))
-        plt.hist((y6_mix), bins=np.linspace(4.5, 9, 20), alpha=0.9, label='6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix), 2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix), 2)) + ' $ \mu$m; cnt: ' + str(y6_mix.shape[0]))
+        plt.hist(y6_mix, bins=np.linspace(4.5, 9, 30), density=True, alpha=0.9,
+                 label=''r'$\bar \mu$: ' + str(
+                     np.round(mu2, 2)) + ' [$\mu$m]  $\sigma$:  ' + str(
+                     np.round(sigma2, 2)) + ' [$\mu$m] cnt: ' + str(y6_mix.shape[0]))
+        plt.plot(np.linspace(4.5, 9, 30), fit2, 'k--', linewidth=2)
     else:
         for i in range(len(test_predictions_mix)):
             if test_predictions_mix[i] <= 4.60:
@@ -245,12 +287,37 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes,frequency_coun
         y6_mix = y6_mix[y6_mix != 0]
         y7_mix = y7_mix[y7_mix != 0]
 
-        plt.figure(figsize=(8, 6))
-        plt.hist((y45_mix), bins=np.linspace(4, 5, 20), alpha=0.9, label= '4.5 $\mu$m; s.dev:  ' + str(np.round(np.std(y45_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y45_mix),2)) + ' $ \mu$m; cnt: '+ str(y45_mix.shape[0]))
-        plt.hist((y5_mix), bins=np.linspace(4.5, 6, 20), alpha=0.9, label= '5 $\mu$m;; s.dev:  ' + str(np.round(np.std(y5_mix),2)) + ' $\mu$m; mean: '+ str(np.round(np.mean(y5_mix),2)) + ' $ \mu$m; cnt: '+ str(y5_mix.shape[0]))
-        plt.hist((y6_mix), bins=np.linspace(5, 7, 20),   alpha=0.9, label= '6 $\mu$m;; s.dev:  ' + str(np.round(np.std(y6_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y6_mix),2)) +' $ \mu$m; cnt: '+ str(y6_mix.shape[0]))
-        plt.hist((y7_mix), bins=np.linspace(6, 8.5, 20), alpha=0.9, label= '7 $\mu$m;; s.dev:  ' + str(np.round(np.std(y7_mix),2)) + ' $\mu$m; mean: ' + str(np.round(np.mean(y7_mix),2)) + ' $ \mu$m; cnt: '+ str(y7_mix.shape[0]))
 
+        plt.figure(figsize=(8, 8))
+        (mu45, sigma45) = norm.fit(y45_mix)
+        (mu1, sigma1) = norm.fit(y5_mix)
+        (mu2, sigma2) = norm.fit(y6_mix)
+        (mu3, sigma3) = norm.fit(y7_mix)
+
+        plt.hist(y45_mix, bins=np.linspace(4, 5, 30), density=True, alpha=0.9,
+                 label=''r'$\bar \mu$: ' + str(
+                     np.round(mu45, 2)) + ' [$\mu$m] $\sigma$:  ' + str(
+                     np.round(sigma45, 2)) + ' [$\mu$m] cnt: ' + str(y45_mix.shape[0]))
+        plt.hist(y5_mix, bins=np.linspace(4.5, 6, 30), density=True, alpha=0.9,
+                 label=''r'$\bar \mu$: ' + str(
+                     np.round(mu1, 2)) + ' [$\mu$m] $\sigma$:  ' + str(
+                     np.round(sigma1, 2)) + ' [$\mu$m] cnt: ' + str(y5_mix.shape[0]))
+        plt.hist(y6_mix, bins=np.linspace(5, 7, 30), density=True, alpha=0.9,
+                 label=''r'$\bar \mu$: ' + str(
+                     np.round(mu2, 2)) + ' [$\mu$m] $\sigma$:  ' + str(
+                     np.round(sigma2, 2)) + ' [$\mu$m] cnt: ' + str(y6_mix.shape[0]))
+        plt.hist(y7_mix, bins=np.linspace(6, 8.5, 30), density=True, alpha=0.9,
+                 label=''r'$\bar \mu$: ' + str(
+                     np.round(mu3, 2)) + ' [$\mu$m] $\sigma$:  ' + str(
+                     np.round(sigma3, 2)) + ' [$\mu$m] cnt: ' + str(y7_mix.shape[0]))
+        fit45 = norm.pdf(np.linspace(4,5,30),mu45,sigma45)
+        fit1 = norm.pdf(np.linspace(4.5, 6, 30), mu1, sigma1)
+        fit2 = norm.pdf(np.linspace(5, 7, 30), mu2, sigma2)
+        fit3 = norm.pdf(np.linspace(6, 8, 30), mu3, sigma3)
+        plt.plot(np.linspace(4,5,30),fit45,'k--',linewidth=2)
+        plt.plot(np.linspace(4.5, 6, 30), fit1, 'k--', linewidth=2)
+        plt.plot(np.linspace(5, 7, 30), fit2, 'k--', linewidth=2)
+        plt.plot(np.linspace(6, 8, 30), fit3, 'k--', linewidth=2)
     #####################################################################################
     #####################################################################################
     ###############################      plot            ################################
@@ -304,13 +371,14 @@ def test(wdw,act_func,date,exclude_size,date_test,test_size,nodes,frequency_coun
     elif exclude_size ==0:
         train_set = "4.5,5,6,7"
 
-    plt.suptitle(r"$\bf{Train}$: "+ train_set +" --"+train_date +"" r"$\bf{Test}$: "+size_test+" "r"$\mu$m --" + test_date +"\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 1*"+str(nodes) + r" $\bf{ Window}:$ "+str(wdw))
-    #+ r"$\bf{ Diameter: }$ Exact"
-
+    if test_size ==0:
+        plt.suptitle(r"$\bf{Train}$: "+ train_set +" --"+train_date +"" r"$\bf{Test}$: "+size_test+"--" + test_date +"\n" + r"$\bf{Activation}$ = "+act_func +" "+ r"$\bf{ Network:}$ 1*"+str(nodes) + r" $\bf{ Window}:$ "+str(wdw))
+    else:
+        plt.suptitle(r"$\bf{Train}$: " + train_set + " --" + train_date + "" r"$\bf{Test}$: " + size_test + " "r"$\mu$m --" + test_date + "\n" + r"$\bf{Activation}$ = " + act_func + " " + r"$\bf{ Network:}$ 0*" + str(nodes) + r" $\bf{ Window}:$ " + str(wdw))
 
     plt.xlabel("particle size "r"[$\mu$m]")
-    plt.ylabel("Count")
-    plt.legend()
+    plt.ylabel("Normalised Count")
+    plt.legend(frameon = True)
     # plt.legend((y5_mix[1], y6_mix[1], y7_mix[1]), ('std dev 5 um' + str(np.std(y5_mix)), 'std dev 6 um' + str(np.std(y6_mix)), 'std dev 7 um' + str(np.std(y7_mix))))
     plt.show()
 

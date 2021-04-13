@@ -10,25 +10,27 @@ np.set_printoptions(precision=3, suppress=True)
 ############################################################################################################
 ############################################################################################################
 # wdw_all = [200, 300, 400, 500, 600, 700, 800]
-# wdw_all = [300,400]
+# wdw_all = [300,400,500]
+# wdw_all = [300]
 # date_multiple = [1117,0]
-# learning_rate_all =[0.1, 0.01, 0.001, 0.0001, 0.00001]
+# learning_rate_all =[1, 0.1, 0.01, 0.001, 0.0001, 0.00001]
+learning_rate_all = [0.01, 0.001, 0.0001]
 # nodes_all = [2,4,6,8,10,12,14,16]
-nodes_all = [2,6,12,14]
+nodes_all = [11]
 # act_func_all = ['selu', 'elu', 'linear']
 # len(act_func_all)
 # split_ratio_all = [0.25, 0.20, 0.15, 0.10, 0.05, 0]
 default = [1]
-for q in range(len(default)):
-    for k in range(len(default)):
-        for i in range(len(nodes_all)):
+for q in range(len(learning_rate_all)):
+    for k in range(len(nodes_all)):
+        for i in range(len(default)):
             wdw = 300                  # window size as chosen in matlab
 
             #configuring the train data
             date = 1117                      # selecting the training data, 0 = combined
             corrected_values = False        # True for using the corrected diameters False for using exact diameters
             split_ratio = 0.15              # The percentage of validation data from the trianing set
-            exclude_size = 7                # 0 to exclude nothing, 45 for 4.5, 5 for 5, 6 for 6, 7 for 7
+            exclude_size = 0                # 0 to exclude nothing, 45 for 4.5, 5 for 5, 6 for 6, 7 for 7
             # exclude_day = 0       does not work yet # 0 to exclude nothing
             frequency_count = 6
 
@@ -38,10 +40,10 @@ for q in range(len(default)):
 
             #configuring the network
             act_func = 'linear'            # Activation function used in training and testing
-            learning_rate = 0.001           # the learning rate of the training
-            patience = 250                  # the amount of epochs the training has to continue after finding the lowest val_loss
+            learning_rate = learning_rate_all[q]          # the learning rate of the training
+            patience = 1000                  # the amount of epochs the training has to continue after finding the lowest val_loss
             epochs = 10000                   # max number of epochs before the training stops
-            nodes = nodes_all[i]
+            nodes = nodes_all[k]
 
             #What to run:
             train_ = 1 # 1 if you want to train the network again
